@@ -16,7 +16,7 @@
  * TWITTER_KEY=
  * TWITTER_SECRET=
  *
- * If you wish, you can put these in a `.env` to seperate your environment 
+ * If you wish, you can put these in a `.env` to seperate your environment
  * specific configuration from your code.
  **/
 
@@ -38,7 +38,7 @@ module.exports = () => {
         clientSecret: process.env.FACEBOOK_SECRET,
         profileFields: ['id', 'displayName', 'email', 'link']
       },
-      getProfile(profile) {
+      getProfile (profile) {
         // Normalize profile into one with {id, name, email} keys
         return {
           id: profile.id,
@@ -60,7 +60,7 @@ module.exports = () => {
         clientID: process.env.GOOGLE_ID,
         clientSecret: process.env.GOOGLE_SECRET
       },
-      getProfile(profile) {
+      getProfile (profile) {
         // Normalize profile into one with {id, name, email} keys
         return {
           id: profile.id,
@@ -76,10 +76,10 @@ module.exports = () => {
    * If we don't get one NextAuth will create a placeholder in the form
    * `{provider}-{account-id}@localhost.localdomain`
    *
-   * To have your Twitter oAuth return emails go to apps.twitter.com and add 
-   * links to your Terms and Conditions and Privacy Policy under the "Settings" 
-   * tab, then check the "Request email addresses" from users box under the 
-   * "Permissions" tab. 
+   * To have your Twitter oAuth return emails go to apps.twitter.com and add
+   * links to your Terms and Conditions and Privacy Policy under the "Settings"
+   * tab, then check the "Request email addresses" from users box under the
+   * "Permissions" tab.
    **/
   if (process.env.TWITTER_KEY && process.env.TWITTER_SECRET) {
     providers.push({
@@ -93,7 +93,7 @@ module.exports = () => {
         consumerSecret: process.env.TWITTER_SECRET,
         userProfileURL: 'https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true'
       },
-      getProfile(profile) {
+      getProfile (profile) {
         // Normalize profile into one with {id, name, email} keys
         return {
           id: profile.id,
@@ -103,6 +103,6 @@ module.exports = () => {
       }
     })
   }
-  
+
   return providers
 }

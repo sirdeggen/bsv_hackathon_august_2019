@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default class extends React.Component {
-  render() {
+  render () {
     if (this.props.fullscreen) {
       return (
         <React.Fragment>
@@ -43,9 +43,9 @@ export default class extends React.Component {
               100% {transform: rotate(360deg); }
             }
           `}</style>
-          <span className="circle-loader">
-            <svg className="circle" width="60" height="60" version="1.1" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="30" cy="30" r="15"/>
+          <span className='circle-loader'>
+            <svg className='circle' width='60' height='60' version='1.1' xmlns='http://www.w3.org/2000/svg'>
+              <circle cx='30' cy='30' r='15' />
             </svg>
           </span>
         </React.Fragment>
@@ -89,9 +89,9 @@ export default class extends React.Component {
               100% {transform: rotate(360deg); }
             }
           `}</style>
-          <span className="circle-loader">
-            <svg className="circle" width="60" height="60" version="1.1" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="30" cy="30" r="15"/>
+          <span className='circle-loader'>
+            <svg className='circle' width='60' height='60' version='1.1' xmlns='http://www.w3.org/2000/svg'>
+              <circle cx='30' cy='30' r='15' />
             </svg>
           </span>
         </React.Fragment>
