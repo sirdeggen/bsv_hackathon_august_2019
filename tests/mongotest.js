@@ -10,4 +10,4 @@ const mongoClient = new MongoClient(url)
 mongoClient.connect(function (err, client) {
   const db = client.db(dbName)
   client.close()
-})
+}, { useNewUrlParser: true })
