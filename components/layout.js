@@ -57,6 +57,8 @@ export default class extends React.Component {
           <meta name='viewport' content='width=device-width, initial-scale=1' />
           <title>{this.props.title || 'Ask The World'}</title>
           <script src='https://cdn.polyfill.io/v2/polyfill.min.js' />
+          <link href='../static/css/bootstrap.min.css' rel='stylesheet' />
+          <link href='../static/css/base.css' rel='stylesheet' />
         </Head>
         <MainBody navmenu={this.props.navmenu} fluid={this.props.fluid} container={this.props.container}>
           <UserMenu />

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Nav, NavItem, NavLink, NextAuth } from 'reactstrap'
+import { Nav, NavItem, NavLink } from 'reactstrap'
+import { NextAuth } from 'next-auth/client'
 import Router from 'next/router'
 import Cookies from 'universal-cookie'
 
@@ -25,15 +26,15 @@ class UserMenu extends Component {
       // If signed in display user dropdown menu
       const session = this.props.session
       return (
-        <Nav className='ml-auto' navbar>
-          <NavLink prefetch href='/ask'>
-            <a href='/ask' className='dropdown-item'><span className='icon ion-md-person mr-1' />Ask</a>
+        <Nav className='ml-auto navbar'>
+          <NavLink className='dropdownitem' href='/ask'>
+            Ask
           </NavLink>
-          <NavLink prefetch href='/questions'>
-            <a href='/questions' className='dropdown-item'><span className='icon ion-md-person mr-1' />Questions</a>
+          <NavLink className='dropdownitem' href='/questions'>
+            Questions
           </NavLink>
-          <NavLink prefetch href='/profile'>
-            <a href='/profile' className='dropdown-item'><span className='icon ion-md-person mr-1' />Profile</a>
+          <NavLink className='dropdownitem' href='/profile'>
+            Profile
           </NavLink>
           {/* <!-- Uses .nojs-dropdown CSS to for a dropdown that works without client side JavaScript -> */}
           <div tabIndex='2' className='dropdown nojs-dropdown'>
@@ -57,11 +58,11 @@ class UserMenu extends Component {
       return (
         <Nav className='ml-auto' navbar>
           <NavItem>
-            <NavLink prefetch href='/ask'>
-              <a href='/ask' className='dropdown-item'><span className='icon ion-md-person mr-1' />Ask</a>
+            <NavLink className='dropdownitem' href='/ask'>
+              Ask
             </NavLink>
-            <NavLink prefetch href='/questions'>
-              <a href='/questions' className='dropdown-item'><span className='icon ion-md-person mr-1' />Questions</a>
+            <NavLink className='dropdownitem' href='/questions'>
+              Questions
             </NavLink>
             {/**
               * @TODO Add support for passing current URL path as redirect URL
