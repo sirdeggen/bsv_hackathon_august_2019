@@ -9,6 +9,7 @@ import Signin from './signin'
 import { NextAuth } from 'next-auth/client'
 import Cookies from 'universal-cookie'
 import Package from '../package'
+import Footer from '../components/footer'
 
 export default class extends React.Component {
   static propTypes () {
@@ -56,56 +57,11 @@ export default class extends React.Component {
           <title>{this.props.title || 'Ask The World'}</title>
           <script src='https://cdn.polyfill.io/v2/polyfill.min.js' />
         </Head>
-        <Navbar light className='navbar navbar-expand-md pt-3 pb-3'>
-          <Link prefetch href='/'>
-            <NavbarBrand href='/'>
-              <span className='icon ion-md-home mr-1' /> {Package.name}
-            </NavbarBrand>
-          </Link>
-          <input className='nojs-navbar-check' id='nojs-navbar-check' type='checkbox' aria-label='Menu' />
-          <label tabIndex='1' htmlFor='nojs-navbar-check' className='nojs-navbar-label mt-2' />
-          <div className='nojs-navbar'>
-            <Nav navbar>
-              <div tabIndex='1' className='dropdown nojs-dropdown'>
-                <div className='nav-item'>
-                  <span className='dropdown-toggle nav-link'>Examples</span>
-                </div>
-                <div className='dropdown-menu'>
-                  <Link prefetch href='/examples/authentication'>
-                    <a href='/examples/authentication' className='dropdown-item'>Auth</a>
-                  </Link>
-                  <Link prefetch href='/examples/async'>
-                    <a href='/examples/async' className='dropdown-item'>Async Data</a>
-                  </Link>
-                  <Link prefetch href='/examples/layout'>
-                    <a href='/examples/layout' className='dropdown-item'>Layout</a>
-                  </Link>
-                  <Link prefetch href='/examples/routing'>
-                    <a href='/examples/routing' className='dropdown-item'>Routing</a>
-                  </Link>
-                  <Link prefetch href='/examples/styling'>
-                    <a href='/examples/styling' className='dropdown-item'>Styling</a>
-                  </Link>
-                </div>
-              </div>
-            </Nav>
-            <UserMenu session={this.props.session} toggleModal={this.toggleModal} signinBtn={this.props.signinBtn} />
-          </div>
-        </Navbar>
         <MainBody navmenu={this.props.navmenu} fluid={this.props.fluid} container={this.props.container}>
           {this.props.children}
         </MainBody>
         <Container fluid={this.props.fluid}>
-          <hr className='mt-3' />
-          <p className='text-muted small'>
-            <Link href='https://github.com/iaincollins/nextjs-starter'><a className='text-muted font-weight-bold'><span className='icon ion-logo-github' /> {Package.name} {Package.version}</a></Link>
-            <span> built with </span>
-            <Link href='https://github.com/zeit/next.js'><a className='text-muted font-weight-bold'>Next.js {Package.dependencies.next.replace('^', '')}</a></Link>
-            <span> &amp; </span>
-            <Link href='https://github.com/facebook/react'><a className='text-muted font-weight-bold'>React {Package.dependencies.react.replace('^', '')}</a></Link>
-            .
-            <span className='ml-2'>&copy; {new Date().getYear() + 1900}.</span>
-          </p>
+          <Footer />
         </Container>
         <SigninModal modal={this.state.modal} toggleModal={this.toggleModal} session={this.props.session} providers={this.state.providers} />
       </React.Fragment>
@@ -129,33 +85,7 @@ export class MainBody extends React.Component {
       )
     } else {
       return (
-        <Container fluid={this.props.fluid} style={{ marginTop: '1em' }}>
-          <Row>
-            <Col xs='12' md='9' lg='10'>
-              {this.props.children}
-            </Col>
-            <Col xs='12' md='3' lg='2' style={{ paddingTop: '1em' }}>
-              <h5 className='text-muted text-uppercase'>Examples</h5>
-              <ListGroup>
-                <ListGroupItem>
-                  <Link prefetch href='/examples/authentication'><a href='/examples/authentication' className='d-block'>Auth</a></Link>
-                </ListGroupItem>
-                <ListGroupItem>
-                  <Link prefetch href='/examples/async'><a href='/examples/async' className='d-block'>Async</a></Link>
-                </ListGroupItem>
-                <ListGroupItem>
-                  <Link prefetch href='/examples/layout'><a href='/examples/layout' className='d-block'>Layout</a></Link>
-                </ListGroupItem>
-                <ListGroupItem>
-                  <Link prefetch href='/examples/routing'><a href='/examples/routing' className='d-block'>Routing</a></Link>
-                </ListGroupItem>
-                <ListGroupItem>
-                  <Link prefetch href='/examples/styling'><a href='/examples/styling' className='d-block'>Styling</a></Link>
-                </ListGroupItem>
-              </ListGroup>
-            </Col>
-          </Row>
-        </Container>
+        <Container fluid={this.props.fluid} style={{ marginTop: '1em' }} />
       )
     }
   }
