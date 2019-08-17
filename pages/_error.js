@@ -29,7 +29,6 @@ class ErrorPage extends React.Component {
         response = (
           <div>
             <Head>
-              <style dangerouslySetInnerHTML={{__html: Styles}}/>
             </Head>
             <Container className="pt-5 text-center">
               <h1 className="display-4">Page Not Found</h1>
