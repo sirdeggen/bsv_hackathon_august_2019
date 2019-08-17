@@ -1,10 +1,10 @@
 {
-  "name": "nextjs-starter",
-  "version": "7.0.2",
-  "description": "A starter Next.js project with email and oAuth authentication",
-  "author": "Iain Collins <me@iaincollins.com>",
+  "name": "asktheworld",
+  "version": "0.0.0.1",
+  "description": "A place to ask questions.",
+  "author": "AskTheWorld Team",
   "license": "ISC",
-  "repository": "https://github.com/iaincollins/nextjs-starter.git",
+  "repository": "https://github.com/sirdeggen/bsv_hackathon_august_2019.git",
   "main": "index.js",
   "dependencies": {
     "babel-core": "^6.26.3",
