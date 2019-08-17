@@ -1,14 +1,12 @@
 // for homepage
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 class GlobalStats extends Component {
-
-  render() {
+  render () {
     return (
-      <div></div>
-    );
+      <div />
+    )
   }
-
 }
 
-export default GlobalStats;
+export default GlobalStats

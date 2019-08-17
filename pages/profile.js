@@ -8,7 +8,7 @@ import Layout from '../components/layout'
 class Profile extends Page {
   render () {
     return (
-      <Layout />
+      <Layout {...this.props} navmenu={false} container={false} />
     )
   }
 }

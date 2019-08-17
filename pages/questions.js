@@ -8,7 +8,7 @@ import QuestionItem from '../components/questionItem'
 class Questions extends Page {
   render () {
     return (
-      <Layout>
+      <Layout {...this.props} navmenu={false} container={false}>
         <QuestionItem />
       </Layout>
     )

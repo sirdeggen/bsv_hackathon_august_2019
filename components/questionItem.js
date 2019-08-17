@@ -1,14 +1,12 @@
 // question clean for list of many
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 class QuestionItem extends Component {
-
-  render() {
+  render () {
     return (
-      <div></div>
-    );
+      <div />
+    )
   }
-
 }
 
-export default QuestionItem;
+export default QuestionItem

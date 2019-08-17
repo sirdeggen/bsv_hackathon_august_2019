@@ -8,7 +8,7 @@ import NewQuestion from '../components/newQuestion'
 class Ask extends Page {
   render () {
     return (
-      <Layout>
+      <Layout {...this.props} navmenu={false} container={false}>
         <NewQuestion />
       </Layout>
     )

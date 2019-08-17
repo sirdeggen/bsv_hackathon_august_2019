@@ -1,14 +1,12 @@
 // question for single question page
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 class QuestionFull extends Component {
-
-  render() {
+  render () {
     return (
-      <div></div>
-    );
+      <div />
+    )
   }
-
 }
 
-export default QuestionFull;
+export default QuestionFull

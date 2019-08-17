@@ -8,7 +8,7 @@ import QuestionFull from '../components/questionFull'
 class Question extends Page {
   render () {
     return (
-      <Layout>
+      <Layout {...this.props} navmenu={false} container={false}>
         <QuestionFull />
       </Layout>
     )

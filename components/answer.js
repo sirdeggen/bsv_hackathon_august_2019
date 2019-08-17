@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
 
 class Answer extends Component {
-
-  render() {
+  render () {
     return (
-      <div></div>
+      <div />
     )
   }
-
 }
 
 export default Answer
