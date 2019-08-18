@@ -10,6 +10,11 @@
     padding-right: 20px;
 }
 
+#topNavigation .topNavItem-logout {
+    margin-left: 10px;
+}
+
+
 #mainLogo {
     max-height: 3em;
 }
