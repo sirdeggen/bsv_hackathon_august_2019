@@ -32,6 +32,7 @@ class FormPageFunctions {
       isSignedIn: !!props.session.user,
       name: '',
       email: '',
+      bsvAddress: '',
       emailVerified: false,
       alertText: null,
       alertStyle: null
@@ -39,6 +40,7 @@ class FormPageFunctions {
     if (props.session.user) {
       self.state.name = props.session.user.name
       self.state.email = props.session.user.email
+      self.state.bsvAddress = props.session.user.bsvAddress
     }
   }
 
@@ -63,6 +65,7 @@ class FormPageFunctions {
         self.setState({
           name: user.name,
           email: user.email,
+          bsvAddress: user.bsvAddress,
           emailVerified: user.emailVerified
         })
       })
