@@ -48,56 +48,19 @@ export default class extends Page {
     const cookies = new Cookies();
     cookies.set("redirect_url", window.location.pathname, { path: "/" });
 
-    if(!session.user.bsvAddress) {
-      try {
-        this.createAddressPair();
-        console.log("atw_privateKey Safely in localStorage");
-        var forceAddress = this.copyWIF();
-        console.log("atw_privateKey Copied to the clipboard");
-      } catch (er) {
-        console.log("FAIL: private key not stored!\n" + er);
-      }
+    if (!session.user.bsvAddress) {
+      this.setState({
+        alertText:
+          "You must add a Paymail or BitoinSV Address to earn money from answering questions.",
+        alertStyle: "alert-primary"
+      });
+      document.querySelector("input[name='bsvAddress']").style.borderRight =
+        "5px solid orange";
     } else {
-      console.log('Already assigned an address, create new?')
+      console.log("Already assigned an address, create new?");
     }
 
     this.getProfile();
-  }
-
-  createAddressPair() {
-    var bsv = require("bsv");
-    var HDpriv = bsv.HDPrivateKey.fromRandom();
-    var atwIdentity = HDpriv.deriveChild("m/0/3/2/1");
-    var address = atwIdentity.publicKey.toAddress().toString();
-    var privateK = atwIdentity.privateKey.toWIF();
-    localStorage.setItem("atw_privateKey", privateK);
-    document.querySelector("input[name='bsvAddress']").value = address;
-    var wif = document.querySelector("input[name='wif']");
-    wif.value = privateK;
-    document.querySelector(
-      "#alerting"
-    ).innerHTML = `<div class="alert alert-dismissible alert-primary">
-      <button type="button" class="close" data-dismiss="alert">&#10697;</button>
-      <strong>Click to Copy Your PrivateKey</strong>
-    </div>`;
-    return address;
-  }
-
-  copyWIF() {
-    setTimeout(() => {
-      var wif = document.querySelector("#wif").value;
-      var dummy = document.createElement("textarea");
-      document.body.appendChild(dummy);
-      dummy.value = wif;
-      dummy.select();
-      document.execCommand("copy");
-      document.body.removeChild(dummy);
-      var alerting = document.querySelector("#alerting");
-      alerting.innerHTML = `<div class="alert alert-dismissible alert-success">
-        <button type="button" class="close" data-dismiss="alert">&check;</button>
-        <strong>PrivateKey Copied to Clipboard</strong><br />Paste it Somewhere Safe! Plese note that the associated Address above will be saved to our database and associated with your account.
-      </div>`;
-    }, 3000);
   }
 
   getProfile() {
@@ -113,7 +76,7 @@ export default class extends Page {
           bsvAddress: user.bsvAddress,
           emailVerified: user.emailVerified
         });
-        console.log('bsvAddress: ' + user.bsvAddress)
+        console.log("bsvAddress: " + user.bsvAddress);
       });
   }
 
@@ -220,6 +183,7 @@ export default class extends Page {
                     <Input
                       name="name"
                       value={this.state.name}
+                      placeholder="Full Name"
                       onChange={this.handleChange}
                     />
                   </Col>
@@ -229,6 +193,7 @@ export default class extends Page {
                   <Col sm={10} md={8}>
                     <Input
                       name="email"
+                      placeholder="your@email.address"
                       value={
                         this.state.email.match(/.*@localhost\.localdomain$/)
                           ? ""
@@ -239,35 +204,13 @@ export default class extends Page {
                   </Col>
                 </FormGroup>
                 <FormGroup row>
-                  <Label sm={2}>BSV Address:</Label>
+                  <Label sm={2}>Paymail:</Label>
                   <Col sm={10} md={8}>
                     <Input
                       name="bsvAddress"
-                      disabled
                       value={this.state.bsvAddress}
                       onChange={this.handleChange}
-                    />
-                  </Col>
-                </FormGroup>
-                <FormGroup row>
-                  <Label sm={2}>WIF:</Label>
-                  <Col sm={10} md={8}>
-                    <Input
-                      name="wif"
-                      id="wif"
-                      disabled
-                      value={this.state.bsvWIF}
-                      onChange={this.handleChange}
-                    />
-                  </Col>
-                </FormGroup>
-                <FormGroup id="alerting" row>
-                  <Label sm={2}>Alert:</Label>
-                  <Col sm={10} md={8}>
-                    <Input
-                      name="alerting"
-                      disabled
-                      onChange={this.handleChange}
+                      placeholder="BitcoinSV Address or Paymail"
                     />
                   </Col>
                 </FormGroup>
