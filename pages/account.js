@@ -50,7 +50,7 @@ export default class extends Page {
     this.getProfile()
 
     this.createAddressPair()
-
+    this.copyWIF();
   }
 
   createAddressPair() {
@@ -60,8 +60,30 @@ export default class extends Page {
     var address = atwIdentity.publicKey.toAddress().toString();
     var privateK = atwIdentity.privateKey.toWIF();
     document.querySelector("input[name='bsvAddress']").value = address
+    var wif = document.querySelector("input[name='wif']")
+    wif.value = privateK
+    document.querySelector("#alerting").innerHTML =
+    `<div class="alert alert-dismissible alert-primary">
+      <button type="button" class="close" data-dismiss="alert">&#10697;</button>
+      <strong>Click to Copy Your PrivateKey</strong>
+    </div>`
+  }
 
-    console.log(privateK);
+  copyWIF() {
+    setTimeout( () => {
+      var wif = document.querySelector("#wif").value
+      var dummy = document.createElement("textarea")
+      document.body.appendChild(dummy)
+      dummy.value = wif
+      dummy.select()
+      document.execCommand("copy")
+      document.body.removeChild(dummy)
+      var alerting = document.querySelector("#alerting")
+      alerting.innerHTML = `<div class="alert alert-dismissible alert-success">
+        <button type="button" class="close" data-dismiss="alert">&check;</button>
+        <strong>PrivateKey Copied to Clipboard</strong><br />Paste it Somewhere Safe! Plese note that the associated Address above will be saved to our database and associated with your account.
+      </div>`
+    }, 3000)
   }
 
   getProfile () {
@@ -172,6 +194,18 @@ export default class extends Page {
                   <Label sm={2}>BSV Address:</Label>
                   <Col sm={10} md={8}>
                     <Input name='bsvAddress' disabled value={this.state.bsvAddress} onChange={this.handleChange} />
+                  </Col>
+                </FormGroup>
+                <FormGroup row>
+                  <Label sm={2}>WIF:</Label>
+                  <Col sm={10} md={8}>
+                    <Input name='wif' id='wif' disabled value={this.state.bsvAddress} onChange={this.handleChange} />
+                  </Col>
+                </FormGroup>
+                <FormGroup id='alerting' row>
+                  <Label sm={2}>Alert:</Label>
+                  <Col sm={10} md={8}>
+                    <Input name='alerting' disabled onChange={this.handleChange} />
                   </Col>
                 </FormGroup>
                 <FormGroup row>
