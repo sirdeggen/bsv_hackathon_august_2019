@@ -8,7 +8,7 @@ const routes = {
   admin: require('./routes/admin'),
   account: require('./routes/account'),
   secretTestPage: require('./routes/secret'),
-  questions: require('./routes/questions')
+  questions: require('./routes/questions'),
 }
 
 // Load environment variables from .env file if present
@@ -62,7 +62,7 @@ nextApp
 
     // Add question routes
     routes.questions(expressApp, nextAuthOptions.functions)
-
+    
     // Serve fonts from ionicon npm module
     expressApp.use('/fonts/ionicons', express.static('./node_modules/ionicons/dist/fonts'))
 

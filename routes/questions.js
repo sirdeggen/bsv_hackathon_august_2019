@@ -72,7 +72,6 @@ module.exports = (expressApp, functions) => {
       questionsCollection
         .findOne({ _id: ObjectId(req.params.id) })
         .then(data => {
-          console.log(data);
           res.status(200).json(data);
         })
         .catch(err => {
@@ -81,5 +80,24 @@ module.exports = (expressApp, functions) => {
     } else {
       return res.status(403).json({ error: "Must pass a valid question ID" });
     }
+  });
+
+  // Expose a route to return list of questions for this user
+  expressApp.get("/questions/answered/:user", (req, res) => {
+    getQuestions(
+      {
+        answers: {
+          $elemMatch: { userId: req.params.user }
+        }
+      },
+      req.headers.l || 100,
+      (err, data) => {
+        if (err) {
+          res.status(500).json(err);
+        } else {
+          res.status(200).json(data);
+        }
+      }
+    );
   });
 };
