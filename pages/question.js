@@ -27,16 +27,16 @@ class Question extends Page {
 
   displayQuestion(data) {
     console.log(data);
-    var allAnswers;
+    var allAnswers = "";
     var paid = 0;
     for (let a = 0; a < data.answers.length; a++) {
       const ans = data.answers[a];
-      var apprcolor;
-      var apprtitle;
+      var apprcolor = "";
+      var apprtitle = "";
       // style depends on response types
       if (ans.response) {
         apprcolor = ans.response.approval
-          ? "bg-success text-white"
+          ? "border-success"
           : "bg-secondary border-danger faded";
         apprtitle = ans.response.approval ? "Approved" : "Invalid";
       } else {
@@ -45,7 +45,7 @@ class Question extends Page {
       }
       // progress bar percentage calculation
       try {
-        paid += ans.response.payment.amount;
+        paid += parseInt(ans.response.payment.amount);
       } catch (er) {
         console.log(er);
       }
@@ -59,13 +59,16 @@ class Question extends Page {
     `;
     var promised = 0;
     for (let p = 0; p < data.proofs.length; p++) {
-      promised += data.proofs[p].amount;
+      promised += parseInt(data.proofs[p].amount);
     }
-    var completion = Math.floor(paid / promised);
+    var completion = String(Math.floor((paid / promised)*100));
+    console.log(paid)
+    console.log(promised)
+    console.log(completion)
     var completionBar = `
     <h6>Payout: </h6>
     <div class='progress'>
-      <div class='progress-bar bg-info' role='progressbar' style='width: ${completion}%' aria-valuenow='${completion}' aria-valuemin='0' aria-valuemax='100'></div>
+      <div class='progress-bar bg-success' role='progressbar' style='width: ${completion}%' aria-valuenow='${completion}' aria-valuemin='0' aria-valuemax='100'></div>
     </div>
     <hr>`;
     window.singleQuestionFull.innerHTML += completionBar;
