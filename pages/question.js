@@ -27,6 +27,16 @@ class Question extends Page {
 
   displayQuestion(data) {
     console.log(data);
+    window.question.innerHTML += `
+      <h3>${data.title}</h3>
+      <p class='lead'>${data.text}</p>
+      <hr>
+    `;
+    for (let a = 0; a < data.answers.length; a++) {
+      const ans = data.answers[a];
+      let approval = ans.response ? ans.response.approval : "";
+      window.singleQuestionFull.innerHTML += `<div class='answer card border-dark mb-3 ${approval}'>${ans.text}</div>`;
+    }
   }
 
   render() {

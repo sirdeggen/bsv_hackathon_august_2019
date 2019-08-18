@@ -2,10 +2,8 @@
 import React, { Component } from 'react'
 
 class QuestionFull extends Component {
-  render () {
-    return (
-      <div />
-    )
+  render() {
+    return <div id="singleQuestionFull" />;
   }
 }
 
