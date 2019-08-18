@@ -26,3 +26,9 @@
 .questionsListItem:hover {
     background-color: #00000010
 }
+
+#question {
+  background: #fafafa;
+  margin: 5vw;
+  padding: 5vw;
+}
