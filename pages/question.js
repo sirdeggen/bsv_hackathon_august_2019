@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Router from "next/router";
 import React from "react";
 import {
   Container,
@@ -21,7 +22,10 @@ class Question extends Page {
     console.log(questionId);
     fetch(`/questions/question/${questionId}`)
       .then(res => res.json())
-      .then(data => this.displayQuestion(data))
+      .then(data => {
+        this.displayQuestion(data);
+        this.displayAnswerInput(data);
+      })
       .catch(err => console.log("Error getting Question", err));
   }
 
@@ -29,22 +33,15 @@ class Question extends Page {
     console.log(data);
     var allAnswers = "";
     var paid = 0;
-    var last = [];
-    var first = [];
-    var middle = [];
-    data.answers = (data.answers || [])
-    for (let a = 0; a < (data.answers); a++) {
-      var ans = data.answers[a];
-      if (ans.response) {
-        if (ans.response.approval === false) {
-          last.push(ans);
-        } else {
-          first.push(ans);
-        }
-      } else {
-        middle.push(ans);
-      }
-    }
+    data.answers = data.answers || [];
+
+    var badAnswers = data.answers.filter(
+      a => a.response && !a.response.approval
+    );
+    var paidAnswers = data.answers.filter(
+      a => a.response && a.response.approval
+    );
+    var uncheckedAnswers = data.answers.filter(a => !a.response);
 
     function addAnswer(a, partAnswers) {
       var ans = partAnswers[a];
@@ -72,17 +69,19 @@ class Question extends Page {
       }
       apprtitle += ans.ontime ? " - On Time" : " - Late";
       allAnswers += `<div class='answer card mb-3 ${apprcolor}'>
-      <div class="card-header">${earned}${apprtitle}</div><div class="card-body">${ans.text}</div></div>`;
+      <div class="card-header">${earned}${apprtitle}</div><div class="card-body">${
+        ans.text
+      }</div></div>`;
     }
 
-    for (let a = 0; a < first.length; a++) {
-      addAnswer(a, first);
+    for (let a = 0; a < paidAnswers.length; a++) {
+      addAnswer(a, paidAnswers);
     }
-    for (let a = 0; a < middle.length; a++) {
-      addAnswer(a, middle);
+    for (let a = 0; a < uncheckedAnswers.length; a++) {
+      addAnswer(a, uncheckedAnswers);
     }
-    for (let a = 0; a < last.length; a++) {
-      addAnswer(a, last);
+    for (let a = 0; a < badAnswers.length; a++) {
+      addAnswer(a, badAnswers);
     }
 
     window.singleQuestionFull.innerHTML += `
@@ -99,10 +98,55 @@ class Question extends Page {
     <div class='progress'>
       <div class='progress-bar bg-success' role='progressbar' style='width: ${completion}%' aria-valuenow='${completion}' aria-valuemin='0' aria-valuemax='100'></div>
     </div>
-    <hr>`;
+    <hr>
+    <div id="questionPostAnswerWrapper"></div>`;
     window.singleQuestionFull.innerHTML += completionBar;
+    console.log(allAnswers);
     window.singleQuestionFull.innerHTML += allAnswers;
   }
+
+  displayAnswerInput = data => {
+    $("#questionPostAnswerWrapper")
+      .append(
+        $("<textarea>")
+          .addClass("col-12")
+          .attr("id", "questionAnswerTextInput")
+          .attr("rows", 4)
+          .attr(
+            "placeholder",
+            "Write your answer. " +
+              (data.expiry > new Date().getTime()
+                ? "The reward period has not expired yet."
+                : "The reward expired, but you could still be helpful")
+          )
+      )
+      .append(
+        $("<button>")
+          .append("Submit")
+          .addClass("btn btn-success col-4")
+          .on("click", () => this.submitAnswerToQuestion(data._id))
+      );
+  };
+
+  submitAnswerToQuestion = qid => {
+    var text = window.questionAnswerTextInput.value.toString();
+    if (text.length === 0) return alert("Cannot Submit an empty reply.");
+
+    fetch("/questions/question/" + qid + "/answer", {
+      method: "POST",
+      body: JSON.stringify({ text: text }),
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "x-csrf-token": this.props.session.csrfToken
+      }
+    })
+      .then(res => res.text())
+      .then(data => {
+        location.reload();
+      })
+      .catch(err => this.showInputError(err));
+  };
 
   render() {
     return (
