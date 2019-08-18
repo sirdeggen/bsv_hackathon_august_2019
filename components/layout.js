@@ -61,7 +61,10 @@ export default class extends React.Component {
           <link href='../static/css/base.css' rel='stylesheet' />
         </Head>
         <MainBody navmenu={this.props.navmenu} fluid={this.props.fluid} container={this.props.container}>
-          <UserMenu />
+          <header id="layoutHeader">
+            <img id="mainLogo" src="../static/images/lockup.jpg" />
+            <UserMenu />
+          </header>
           {this.props.children}
         </MainBody>
         <Container fluid={this.props.fluid}>

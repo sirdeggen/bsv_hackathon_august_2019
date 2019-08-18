@@ -1,0 +1,19 @@
+#topNavigation{
+    display: flex;
+    flex-direction: row;
+    float: right;
+}
+
+#topNavigation .topNavItem {
+    min-width: 20%;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+#mainLogo {
+    max-height: 3em;
+}
+
+#layoutHeader {
+    border-bottom: 1px solid black;
+}
