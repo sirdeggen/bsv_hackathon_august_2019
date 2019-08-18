@@ -17,7 +17,7 @@
   "answers": [
     {
       "text": "I suggest you call in the army and have them nuke the tree from space.",
-      "userId": 2,
+      "userId": "5d590a9bd5cbcc830761bb3b",
       "timestamp": "1566171520",
       "ontime": true,
       "response": {
@@ -31,7 +31,7 @@
     },
     {
       "text": "Please buy my stupid copycoin #shillingforsiliconvalley.",
-      "userId": 3,
+      "userId": "5d58e096db9e94179f33be0e",
       "timestamp": "1566170520",
       "ontime": true,
       "response": {
@@ -40,13 +40,13 @@
     },
     {
       "text": "GO to your local Walmart - they have great saws there.",
-      "userId": 4,
+      "userId": "5d590a9bd5cbcc830761bb3b",
       "timestamp": "1566190520",
       "ontime": true
     },
     {
       "text": "Potentially you could just buy a chainsaw and be done with it. Until then hit it really hard if you can. Lots of times too, that's going to be essential.",
-      "userId": 5,
+      "userId": "5d58e096db9e94179f33be0e",
       "timestamp": "1566372520",
       "ontime": false
     }
