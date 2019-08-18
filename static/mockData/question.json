@@ -1,7 +1,7 @@
 {
   "title": "What does the fromRandom() method do?",
   "text": "What does the method bsv.HDPrivateKey.fromRandom() do in the #bsvlibrary? #javascript #bsv",
-  "userId": "5d58e096db9e94179f33be0e",
+  "userId": "5d598a318dd6ed998b373b77",
   "timestamp": "1566112360",
   "expiry": "1566371520",
   "proofs": [
@@ -17,7 +17,7 @@
   "answers": [
     {
       "text": "The fromRandom() method uses a pretty good random number generator to salt the creation of a PrivateKey object, which you can then derive an address from etc.",
-      "userId": "5d58e096db9e94179f33be0e",
+      "userId": "5d598a318dd6ed998b373b77",
       "timestamp": "1566171520",
       "ontime": true,
       "response": {
@@ -46,7 +46,7 @@
     },
     {
       "text": "Super helpful answer but it's too late, so payment is at discretion of the asker.",
-      "userId": "5d58e096db9e94179f33be0e",
+      "userId": "5d598a318dd6ed998b373b77",
       "timestamp": "1566372520",
       "ontime": false
     }

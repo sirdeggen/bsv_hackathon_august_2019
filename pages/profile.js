@@ -81,7 +81,7 @@ class Profile extends Page {
             )
             .append(
               $("<span>")
-                .append(q.answers.length + " answers")
+                .append((q.answers||[]).length + " answers")
                 .addClass("col-2")
                 .addClass("questionAnswerCount")
             )

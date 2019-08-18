@@ -54,7 +54,7 @@ module.exports = (expressApp, functions) => {
   // Expose a route to return list of questions for this user
   expressApp.get("/questions/user/:user", (req, res) => {
     getQuestions(
-      { userId: req.params.user },
+      { userId: ObjectId(req.params.user) },
       req.headers.l || 100,
       (err, data) => {
         if (err) {
@@ -87,7 +87,7 @@ module.exports = (expressApp, functions) => {
     getQuestions(
       {
         answers: {
-          $elemMatch: { userId: req.params.user }
+          $elemMatch: { userId: ObjectId(req.params.user) }
         }
       },
       req.headers.l || 100,

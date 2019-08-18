@@ -32,7 +32,8 @@ class Question extends Page {
     var last = [];
     var first = [];
     var middle = [];
-    for (let a = 0; a < data.answers.length; a++) {
+    data.answers = (data.answers || [])
+    for (let a = 0; a < (data.answers); a++) {
       var ans = data.answers[a];
       if (ans.response) {
         if (ans.response.approval === false) {

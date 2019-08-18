@@ -49,42 +49,42 @@ class Questions extends Page {
       )
       .appendTo(table);
     var tbody = window.tbody;
-    for (let i = 0; i < data.length; i++) {
-      const q = data[i];
-      $("<tr>")
-        .attr("onClick", "window.location.href='/question?id=" + q._id + "'")
-        .addClass("table-light table-hover")
-        .css("cursor", "pointer")
-        .append(
-          $("<td>")
-            .append(q.title)
-            .append(
-              $("<span>")
-                .append(q.text)
-                .addClass('text-muted')
-                .css("overflow", "hidden")
-                .css("padding-left", "10px")
-                .css("text-overflow", "elipsis")
-                .css("overflow", "hidden")
-                .css("white-space", "nowrap")
+      for (let i = 0; i < data.length; i++) {
+        const q = data[i];
+        $("<tr>")
+          .attr("onClick", "window.location.href='/question?id=" + q._id + "'")
+          .addClass("table-light table-hover")
+          .css("cursor", "pointer")
+          .append(
+            $("<td>")
+              .append(q.title)
+              .append(
+                $("<span>")
+                  .append(q.text)
+                  .addClass('text-muted')
+                  .css("overflow", "hidden")
+                  .css("padding-left", "10px")
+                  .css("text-overflow", "elipsis")
+                  .css("overflow", "hidden")
+                  .css("white-space", "nowrap")
+              )
             )
+          .append(
+            $("<td>")
+              .append((q.answers||[]).length + " answers")
           )
-        .append(
-          $("<td>")
-            .append(q.answers.length + " answers")
-        )
-        .append(
-          $("<td>")
-            .css('text-align', 'right')
-            .append(
-              q.proofs
-                .filter(p => p.type == "promise")
-                .map(p => parseInt(p.amount))
-                .reduce((a, b) => a + b, 0) + " satoshis"
+          .append(
+            $("<td>")
+              .css('text-align', 'right')
+              .append(
+                q.proofs
+                  .filter(p => p.type == "promise")
+                  .map(p => parseInt(p.amount))
+                  .reduce((a, b) => a + b, 0) + " satoshis"
+              )
             )
-          )
-        .appendTo(tbody);
-    }
+          .appendTo(tbody);
+      }
   }
 }
 
