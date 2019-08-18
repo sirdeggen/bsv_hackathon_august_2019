@@ -31,3 +31,9 @@
     text-align: right;
     font-size: 1.2em;
 }
+
+#singleQuestionFull {
+  background: #fafafa;
+  margin: 5vw;
+  padding: 5vw;
+}
