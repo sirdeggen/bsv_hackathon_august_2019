@@ -37,8 +37,10 @@ class Question extends Page {
       var apprcolor;
       var apprtitle;
       if (ans.response) {
-        apprcolor = (ans.response.approval) ? "bg-success text-white" : "bg-secondary border-danger";
-        apprtitle = (ans.response.approval) ? "Approved" : "Invalid"
+        apprcolor = ans.response.approval
+          ? "bg-success text-white"
+          : "bg-secondary border-danger";
+        apprtitle = ans.response.approval ? "Approved" : "Invalid";
       } else {
         apprcolor = "bg-light";
         apprtitle = "Not Yet Approved";
