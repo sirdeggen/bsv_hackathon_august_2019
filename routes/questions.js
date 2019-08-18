@@ -28,10 +28,10 @@ if (process.env.MONGO_URI) {
   });
 }
 
-async function getQuestions(body, callback) {
+async function getQuestions(q, l, callback) {
   await questionsCollection
-    .find(body.q)
-    .limit(parseInt(body.l))
+    .find(q)
+    .limit(parseInt(l))
     .toArray(callback);
 }
 
@@ -42,7 +42,7 @@ module.exports = (expressApp, functions) => {
 
   // Expose a route to return list of questions for this user
   expressApp.get("/questions/all", (req, res) => {
-    getQuestions(req.body, (err, data) => {
+    getQuestions(null, req.headers.l || 100, (err, data) => {
       if (err) {
         res.status(500).json(err);
       } else {
@@ -53,14 +53,17 @@ module.exports = (expressApp, functions) => {
 
   // Expose a route to return list of questions for this user
   expressApp.get("/questions/user/:user", (req, res) => {
-    if (req.params.user) {
-      // questionsCollection.find()
-      console.log(`get request for userid ${req.params.user}'s questions'`);
-    } else {
-      return res
-        .status(403)
-        .json({ error: "Must be signed in to get profile" });
-    }
+    getQuestions(
+      { userId: req.params.user },
+      req.headers.l || 100,
+      (err, data) => {
+        if (err) {
+          res.status(500).json(err);
+        } else {
+          res.status(200).json(data);
+        }
+      }
+    );
   });
 
   // Expose a route to return list of questions for this user
@@ -76,9 +79,7 @@ module.exports = (expressApp, functions) => {
           res.status(500).json(err);
         });
     } else {
-      return res
-        .status(403)
-        .json({ error: "Must be signed in to get profile" });
+      return res.status(403).json({ error: "Must pass a valid question ID" });
     }
   });
 };

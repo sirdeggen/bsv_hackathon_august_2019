@@ -43,8 +43,9 @@ class Profile extends Page {
     }
   };
 
-  componentDidMount() {
-    fetch("/questions/all", { headers: { q: null, l: 25 } })
+  componentDidMount = () => {
+    var userID = this.props.session.user.id
+    fetch("/questions/user/" + userID, { headers: { l: 25 } })
       .then(res => res.json())
       .then(data => this.displayQuestions(data))
       .catch(err => console.log("Error getting Questions", err));
