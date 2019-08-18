@@ -14,25 +14,38 @@ if (process.env.MONGO_URI) {
     questionsCollection = db.collection('questions')
   })
 }
+
+async function newQuestion (data) {
+  var res = await questionsCollection.insertMany(data)
+  console.log(res)
+  return res
+}
+
+async function deleteQuestion (ids) {
+  var res = await questionsCollection.deleteOne({ '_id': ids })
+  console.log(res)
+  return res
+}
+
 module.exports = (expressApp) => {
   expressApp.post('/secret/generateData', (req, res) => {
     console.log('generate test data')
     if (req.user) {
       console.log('logged in')
-      var result = questionsCollection.insertMany([JSON.parse(JSON.stringify(mockData))])
-      console.log(result)
+      var result = newQuestion([JSON.parse(JSON.stringify(mockData))])
       return res.status(200).json(result)
     } else {
       console.log('not logged in')
       return res.status(403).json({ error: 'Must be signed in to get profile' })
     }
   })
-  expressApp.delete('/secret/deleteData', (req, res) => {
-    console.log('delete test data')
 
+  expressApp.delete('/secret/delete/:id', (req, res) => {
+    console.log(`delete question ${req.params.id}`)
     if (req.user) {
       console.log('logged in')
-      return res.status(200).json({ success: 'this is a mockup' })
+      var result = deleteQuestion(req.params.id)
+      return res.status(200).json(result)
     } else {
       console.log('not logged in')
       return res.status(403).json({ error: 'Must be signed in to get profile' })

@@ -47,8 +47,9 @@ class Secret extends Page {
     });
   };
 
-  deleteData = () => {
-    fetch("/secret/deleteData", {
+  // delete specificquestion for now some random one
+  deleteData(value) {
+    fetch(`/secret/delete/${value}`, {
       method: "DELETE",
       body: JSON.stringify({}),
       credentials: "include",
@@ -63,7 +64,7 @@ class Secret extends Page {
     return (
       <Layout {...this.props} navmenu={false} container={false}>
         <Button onClick={this.generate}>GENERATE</Button>
-        <Button onClick={this.deleteData}>DELETE</Button>
+        <Button onClick={this.deleteData('5d59307df80e928842ac9405')}>DELETE</Button>
       </Layout>
     );
   }
