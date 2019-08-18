@@ -26,42 +26,18 @@ class UserMenu extends Component {
       // If signed in display user dropdown menu
       const session = this.props.session
       return (
-        <Nav id='topNavigation' className='ml-auto navbar'>
+        <Nav id='topNavigation' navbar>
           <NavLink href='/ask' className='topNavItem btn btn-outline-primary'>
             Ask
           </NavLink>
           <NavLink href='/questions' className='topNavItem btn btn-outline-primary'>
             Questions
           </NavLink>
-          <NavLink href='/profile' className='topNavItem btn btn-outline-primary'>
+          <NavLink href={"/profile?id=" + this.props.session.user.id} className='topNavItem btn btn-outline-primary'>
             Profile
           </NavLink>
-          {/* <!-- Uses .nojs-dropdown CSS to for a dropdown that works without client side JavaScript -> */}
-          <div tabIndex='2' className='dropdown nojs-dropdown'>
-            <div className='nav-item'>
-              <span className='dropdown-toggle nav-link d-none d-md-block'>
-                <span
-                  className='icon ion-md-contact'
-                  style={{
-                    fontSize: '2em',
-                    position: 'absolute',
-                    top: -5,
-                    left: -25
-                  }}
-                />
-              </span>
-              <span className='dropdown-toggle nav-link d-block d-md-none'>
-                <span className='icon ion-md-contact mr-2' />
-                {session.user.name || session.user.email}
-              </span>
-            </div>
-          </div>
         </Nav>
       )
-    }
-    if (this.props.signinBtn === false) {
-      // If not signed in, don't display sign in button if disabled
-      return null
     } else {
       // If not signed in, display sign in button
       return (
