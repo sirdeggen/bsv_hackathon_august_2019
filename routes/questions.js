@@ -27,16 +27,8 @@ if (process.env.MONGO_URI) {
   })
 }
 
-async function getQuestions (q) {
-  var res = await questionsCollection.find(q).toArray((err, data) => {
-    if (err) {
-      res.status(500).json(err)
-    } else {
-      res.status(200).json(data)
-    }
-  })
-  console.log(res)
-  return res
+async function getQuestions (body, callback) {
+  await questionsCollection.find(body.q).limit(parseInt(body.l)).toArray(callback)
 }
 
 module.exports = (expressApp, functions) => {
@@ -46,7 +38,13 @@ module.exports = (expressApp, functions) => {
 
   // Expose a route to return list of questions for this user
   expressApp.get('/questions/all', (req, res) => {
-    getQuestions(req.body.q)
+    getQuestions(req.body, (err, data) => {
+      if (err) {
+        res.status(500).json(err)
+      } else {
+        res.status(200).json(data)
+      }
+    })
   })
 
   // Expose a route to return list of questions for this user

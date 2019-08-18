@@ -44,8 +44,8 @@ class Secret extends Page {
         "Content-Type": "x-www-form-urlencoded",
         "x-csrf-token": this.props.session.csrfToken
       }
-    });
-  };
+    })
+  }
 
   // delete specificquestion for now some random one
   deleteData(value) {
