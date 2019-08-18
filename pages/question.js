@@ -27,7 +27,7 @@ class Question extends Page {
 
   displayQuestion(data) {
     console.log(data);
-    window.question.innerHTML += `
+    window.singleQuestionFull.innerHTML += `
       <h3>${data.title}</h3>
       <p class='lead'>${data.text}</p>
       <hr>
