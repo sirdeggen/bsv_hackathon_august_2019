@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Router from 'next/router'
 import React from "react";
 import {
   Container,
@@ -36,9 +37,13 @@ class Ask extends Page {
       return (
         <Layout {...this.props} navmenu={false} container={false}>
           <h2>You need to be logged in in order to Ask a question.</h2>
-          <h4>Once you enter your account, you will be able to ask your question.</h4>
+          <h4>
+            Once you enter your account, you will be able to ask your question.
+          </h4>
           <Link id="loginRedirectLink" href="/auth?redirect=/ask">
-            <Button className="btn btn-outline-primary">Click here to Login</Button>
+            <Button className="btn btn-outline-primary">
+              Click here to Login
+            </Button>
           </Link>
         </Layout>
       );
@@ -214,9 +219,9 @@ class Ask extends Page {
         "x-csrf-token": this.props.session.csrfToken
       }
     })
-      .then(res => res.text())
-      .then(data => console.log(data))
-      .catch(err => console.log(err));
+      .then(res => res.json())
+      .then(data => Router.push("/question?id=" + data._id))
+      .catch(err => this.showInputError(err));
   };
 }
 
