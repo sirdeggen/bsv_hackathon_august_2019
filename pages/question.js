@@ -34,8 +34,18 @@ class Question extends Page {
     `;
     for (let a = 0; a < data.answers.length; a++) {
       const ans = data.answers[a];
-      let approval = ans.response ? ans.response.approval : "";
-      window.singleQuestionFull.innerHTML += `<div class='answer card border-dark mb-3 ${approval}'>${ans.text}</div>`;
+      var apprcolor;
+      var apprtitle;
+      if (ans.response) {
+        apprcolor = (ans.response.approval) ? "bg-success text-white" : "bg-secondary border-danger";
+        apprtitle = (ans.response.approval) ? "Approved" : "Invalid"
+      } else {
+        apprcolor = "bg-light";
+        apprtitle = "Not Yet Approved";
+      }
+      apprtitle += ans.ontime ? " - On Time" : " - Late";
+      window.singleQuestionFull.innerHTML += `<div class='answer card mb-3 ${apprcolor}'>
+      <div class="card-header">${apprtitle}</div><div class="card-body">${ans.text}</div></div>`;
     }
   }
 

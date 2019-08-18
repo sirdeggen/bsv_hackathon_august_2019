@@ -3,7 +3,7 @@ import React, { Component } from "react";
 
 class QuestionFull extends Component {
   render() {
-    return <div id="singleQuestionFull" />;
+    return <div id="singleQuestionFull" class="jumbotron"/>;
   }
 }
 
