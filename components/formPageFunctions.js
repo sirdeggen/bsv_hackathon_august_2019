@@ -1,7 +1,7 @@
-import Link from "next/link";
-import React from "react";
-import fetch from "isomorphic-fetch";
-import { NextAuth } from "next-auth/client";
+import Link from 'next/link'
+import React from 'react'
+import fetch from 'isomorphic-fetch'
+import { NextAuth } from 'next-auth/client'
 import {
   Row,
   Col,
@@ -14,47 +14,45 @@ import {
   ListGroup,
   Session,
   ListGroupItem
-} from "reactstrap";
-import Page from "./page";
-import Layout from "./layout";
-import QuestionItem from "./questionItem";
+} from 'reactstrap'
+import Page from './page'
+import Layout from './layout'
+import QuestionItem from './questionItem'
 import Cookies from 'universal-cookie'
 
 class FormPageFunctions {
-
-  static async getInitialProps(self, { req }, props) {
-    props.linkedAccounts = await NextAuth.linked({ req });
-    return props;
+  static async getInitialProps (self, { req }, props) {
+    props.linkedAccounts = await NextAuth.linked({ req })
+    return props
   }
 
-  static construct(self, props) {
+  static construct (self, props) {
     self.state = {
       session: props.session,
       isSignedIn: !!props.session.user,
-      name: "",
-      email: "",
+      name: '',
+      email: '',
       emailVerified: false,
       alertText: null,
       alertStyle: null
-    };
-    if (props.session.user) {
-      self.state.name = props.session.user.name;
-      self.state.email = props.session.user.email;
     }
-    
+    if (props.session.user) {
+      self.state.name = props.session.user.name
+      self.state.email = props.session.user.email
+    }
   }
 
-  static async componentDidMount(self) {
-    const session = await NextAuth.init({ force: true });
+  static async componentDidMount (self) {
+    const session = await NextAuth.init({ force: true })
     self.setState({
       session: session,
       isSignedIn: !!session.user
-    });
+    })
 
     // If the user bounces off to link/unlink their account we want them to
     // land back here after signing in with the other service / unlinking.
-    const cookies = new Cookies();
-    cookies.set("redirect_url", window.location.pathname, { path: "/" });
+    const cookies = new Cookies()
+    cookies.set('redirect_url', window.location.pathname, { path: '/' })
 
     fetch('/account/user', {
       credentials: 'include'
@@ -71,6 +69,4 @@ class FormPageFunctions {
   }
 }
 
-
 export { FormPageFunctions }
-
