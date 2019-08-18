@@ -1,5 +1,5 @@
 // question for single question page
-import React, { Component } from "react";
+import React, { Component } from 'react'
 
 class QuestionFull extends Component {
   render() {
@@ -7,4 +7,4 @@ class QuestionFull extends Component {
   }
 }
 
-export default QuestionFull;
+export default QuestionFull

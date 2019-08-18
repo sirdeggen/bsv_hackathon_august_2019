@@ -27,6 +27,11 @@
     background-color: #00000010
 }
 
+#profileGreeting {
+    text-align: right;
+    font-size: 1.2em;
+}
+
 #singleQuestionFull {
   background: #fafafa;
   margin: 5vw;

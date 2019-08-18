@@ -48,8 +48,9 @@ class Secret extends Page {
   }
 
   // delete specificquestion for now some random one
-  deleteData(value) {
-    fetch(`/secret/delete/${value}`, {
+  deleteData = () => {
+    console.log(this.props.session.csrfToken);
+    fetch(`/secret/delete/`, {
       method: "DELETE",
       body: JSON.stringify({}),
       credentials: "include",
@@ -61,12 +62,21 @@ class Secret extends Page {
   };
 
   render() {
-    return (
-      <Layout {...this.props} navmenu={false} container={false}>
-        <Button onClick={this.generate}>GENERATE</Button>
-        <Button onClick={this.deleteData('5d59307df80e928842ac9405')}>DELETE</Button>
-      </Layout>
-    );
+    if(this.props.session && this.props.session.user){
+      return (
+        <Layout {...this.props} navmenu={false} container={false}>
+          <Button onClick={this.generate}>GENERATE</Button>
+          <Button onClick={this.deleteData}>DELETE</Button>
+        </Layout>
+      );
+    }
+    else {
+      return (
+        <Layout {...this.props} navmenu={false} container={false}>
+          You have no right to be here!
+        </Layout>
+      );
+    }
   }
 }
 

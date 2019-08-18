@@ -52,11 +52,7 @@ class Question extends Page {
   render() {
     return (
       <Layout {...this.props} navmenu={false} container={false}>
-        <Row className="mb-1">
-          <Col xs="12">
-            <QuestionFull />
-          </Col>
-        </Row>
+        <QuestionFull />
       </Layout>
     );
   }
