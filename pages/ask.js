@@ -145,7 +145,7 @@ class Ask extends Page {
     window.questionDetailsInput.onkeyup = this.updateTags;
     this.updateTags();
     window.newQuestionSubmit.onclick = this.submitQuestion;
-    this.setMockValues();
+    // this.setMockValues();
   }
 
   setMockValues = () => {
