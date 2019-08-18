@@ -1,0 +1,55 @@
+{
+  "title": "Tree Trouble with only an Axe",
+  "text": "How do I cut down the huge tree with only my hand axe?",
+  "userId": "5d58e096db9e94179f33be0e",
+  "timestamp": "1566112360",
+  "expiry": "1566371520",
+  "proofs": [
+    {
+      "type": "inquestion",
+      "amount": "600000"
+    },
+    {
+      "type": "promise",
+      "amount": "62300000"
+    }
+  ],
+  "answers": [
+    {
+      "text": "I suggest you call in the army and have them nuke the tree from space.",
+      "userId": 2,
+      "timestamp": "1566171520",
+      "ontime": true,
+      "response": {
+        "approval": true,
+        "payment": {
+          "txId": "5657b8131b24fb801c96de00d8740601d6b8d6f7e0fa2f6cd76aac0505e9cd9e",
+          "amount": "8000000",
+          "message": "Thanks! This was a very helpful answer."
+        }
+      }
+    },
+    {
+      "text": "Please buy my stupid copycoin #shillingforsiliconvalley.",
+      "userId": 3,
+      "timestamp": "1566170520",
+      "ontime": true,
+      "response": {
+        "approval": false
+      }
+    },
+    {
+      "text": "GO to your local Walmart - they have great saws there.",
+      "userId": 4,
+      "timestamp": "1566190520",
+      "ontime": true
+    },
+    {
+      "text": "Potentially you could just buy a chainsaw and be done with it. Until then hit it really hard if you can. Lots of times too, that's going to be essential.",
+      "userId": 5,
+      "timestamp": "1566372520",
+      "ontime": false
+    }
+  ],
+  "mock": true
+}
