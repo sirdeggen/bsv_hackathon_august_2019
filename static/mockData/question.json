@@ -17,7 +17,7 @@
   "answers": [
     {
       "text": "The fromRandom() method uses a pretty good random number generator to salt the creation of a PrivateKey object, which you can then derive an address from etc.",
-      "userId": 2,
+      "userId": "5d58e096db9e94179f33be0e",
       "timestamp": "1566171520",
       "ontime": true,
       "response": {
@@ -31,7 +31,7 @@
     },
     {
       "text": "I have no idea but would you like to buy my cereal?",
-      "userId": 3,
+      "userId": "aaaaa",
       "timestamp": "1566170520",
       "ontime": true,
       "response": {
@@ -40,13 +40,13 @@
     },
     {
       "text": "This answer hasn't been seen by the asker yet. Perhaps it's useful - who knows?",
-      "userId": 4,
+      "userId": "aaaaa",
       "timestamp": "1566190520",
       "ontime": true
     },
     {
       "text": "Super helpful answer but it's too late, so payment is at discretion of the asker.",
-      "userId": 5,
+      "userId": "5d58e096db9e94179f33be0e",
       "timestamp": "1566372520",
       "ontime": false
     }
