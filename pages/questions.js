@@ -17,13 +17,13 @@ class Questions extends Page {
   render() {
     return (
       <Layout {...this.props} navmenu={false} container={false}>
-        <ListGroup id="questionsList" />
+        <div id="questionsList" />
       </Layout>
     );
   }
 
   componentDidMount() {
-    fetch("/questions/all", { headers: {q:null, l:25} })
+    fetch("/questions/all", { headers: { q: null, l: 25 } })
       .then(res => res.json())
       .then(data => this.displayQuestions(data))
       .catch(err => console.log("Error getting Questions", err));
@@ -31,42 +31,57 @@ class Questions extends Page {
 
   displayQuestions(data) {
     console.log("Questions", data);
-    var ul = window.questionsList;
+    var table = window.questionsList;
 
+    $("<table>")
+      .addClass("table")
+      .append(
+        `<thead>
+          <tr class='table-primary'>
+            <th scope="col">Questions</th>
+            <th scope="col">Answers</th>
+            <th scope="col" style="text-align: right;">Value</th>
+          </tr>
+        </thead>`
+      )
+      .append(
+        $("<tbody id='tbody'>")
+      )
+      .appendTo(table);
+    var tbody = window.tbody;
     for (let i = 0; i < data.length; i++) {
       const q = data[i];
-
-      $("<a>")
-        .attr("href", "/question?id=" + q._id)
-        .addClass("questionsListItem")
+      $("<tr>")
+        .attr("onClick", "window.location.href='/question?id=" + q._id + "'")
+        .addClass("table-light table-hover")
+        .css("cursor", "pointer")
         .append(
-          $("<div>")
-            .addClass("row")
+          $("<td>")
+            .append(q.title)
             .append(
               $("<span>")
-                .addClass("col-8")
-                .append(q.title)
-                .addClass("questionTitle")
+                .append(q.text)
+                .addClass('text-muted')
+                .css("overflow", "hidden")
+                .css("padding-left", "10px")
+                .css("white-space", "nowrap")
             )
-            .append(
-              $("<span>")
-                .append(q.answers.length + " answers")
-                .addClass("col-2")
-                .addClass("questionAnswerCount")
-            )
-            .append(
-              $("<span>")
-                .addClass("questionPromised")
-                .addClass("col-2")
-                .append(
-                  q.proofs
-                    .filter(p => p.type == "promise")
-                    .map(p => parseInt(p.amount))
-                    .reduce((a, b) => a + b, 0) + " satoshis"
-                )
-            )
+          )
+        .append(
+          $("<td>")
+            .append(q.answers.length + " answers")
         )
-        .appendTo(ul);
+        .append(
+          $("<td>")
+            .css('text-align', 'right')
+            .append(
+              q.proofs
+                .filter(p => p.type == "promise")
+                .map(p => parseInt(p.amount))
+                .reduce((a, b) => a + b, 0) + " satoshis"
+            )
+          )
+        .appendTo(tbody);
     }
   }
 }
