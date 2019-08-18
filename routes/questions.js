@@ -67,6 +67,39 @@ module.exports = (expressApp, functions) => {
   });
 
   // Expose a route to return list of questions for this user
+  expressApp.post("/questions/question/:id/answer", (req, res) => {
+    if (req.user) {
+      if (!req.body.text || req.body.text.toString().length === 0) {
+        return res.status(500).json({message:"Invalid answer text"});
+      }
+      var text = req.body.text.toString();
+
+      questionsCollection
+        .findOne({ _id: ObjectId(req.params.id) })
+        .then(question => {
+          var answer = { text: text };
+          answer.timestamp = new Date().getTime();
+          answer.userId = req.user.id;
+          answer.ontime = question.expiry > answer.timestamp;
+
+          questionsCollection
+            .updateOne(
+              { _id: ObjectId(req.params.id) },
+              { $push: { answers: answer } }
+            )
+            .then(res => res.status(200).json(res))
+            .catch(err => res.status(500).json(err));
+        })
+        .catch(err => {
+          res.status(500).json(err);
+        });
+    } else {
+      console.log("not logged in");
+      return res.status(403).json({ error: "Must be signed in do that" });
+    }
+  });
+
+  // Expose a route to return list of questions for this user
   expressApp.get("/questions/question/:id", (req, res) => {
     if (req.params.id) {
       questionsCollection
