@@ -67,3 +67,9 @@
 .faded {
   opacity: 0.2;
 }
+
+.approvedBSV {
+  background-color: #eab300;
+  font-size: 16px;
+  float: right;
+}
