@@ -33,7 +33,7 @@ class UserMenu extends Component {
           <NavLink href='/questions' className='topNavItem btn btn-outline-primary'>
             Questions
           </NavLink>
-          <NavLink href='/profile' className='topNavItem btn btn-outline-primary'>
+          <NavLink href={"/profile?id=" + this.props.session.user.id} className='topNavItem btn btn-outline-primary'>
             Profile
           </NavLink>
         </Nav>
