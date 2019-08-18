@@ -23,13 +23,34 @@
     border-bottom: 1px solid black;
 }
 
-.questionsListItem {
-    padding: 10px 0;
-    border:1px solid #00000050
+#profileAnswersOverview {
+    margin-top:30px;
 }
 
-.questionsListItem:hover {
-    background-color: #00000010
+.questionsListItem, .answerListItem {
+    padding: 10px;
+    border:1px solid #00000050;
+    color: black;
+    text-decoration: none;
+}
+
+.answerListItem .answer-unchecked {
+    color: lightgray;
+}
+.answerListItem .answer-bad {
+    color: red;
+}
+.answerListItem .answer-questionTitle, .answerListItem .answerText {
+    overflow-x: hidden;
+    white-space: nowrap;
+}
+.answerListItem .answer-questionTitle {
+    border-bottom:1px solid black;
+}
+
+.questionsListItem:hover, .answerListItem:hover {
+    background-color: #00000010;
+    text-decoration: none;
 }
 
 #profileGreeting {
