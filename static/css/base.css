@@ -42,3 +42,7 @@
   margin: 5vw;
   padding: 5vw;
 }
+
+.faded {
+  opacity: 0.2;
+}

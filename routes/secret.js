@@ -1,5 +1,5 @@
 const MongoClient = require("mongodb").MongoClient;
-const mockData = require("../static/mockData/question.json");
+const mockData = require("../static/mockData/question2.json");
 
 let usersCollection;
 let questionsCollection;
