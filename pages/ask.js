@@ -37,6 +37,8 @@ class Ask extends Page {
         <Container id="newQuestionWrapper">
           <h2>New Question</h2>
 
+          <div id="questionAlerts" />
+
           <div>
             <Label for="questionTitleInput">Title of your question</Label>
             <Input
@@ -134,7 +136,16 @@ class Ask extends Page {
     window.questionPromiseReward.value = 99999999999999;
   };
 
-  showInputError = errorText => {};
+  showInputError = errorText => {
+    $(window.questionAlerts)
+      .empty()
+      .append(
+        $("<div>")
+          .addClass("alert")
+          .addClass("alert-danger")
+          .append($("<span>").append(errorText))
+      );
+  };
 
   submitQuestion = () => {
     var question = {};
@@ -170,6 +181,8 @@ class Ask extends Page {
         amount: Math.max(0, parseInt(window.questionPromiseReward.value))
       }
     ];
+    if (question.proofs[0].amount < 0)
+      this.showInputError("Reward cannot be smaller than 0");
 
     this.postQuestion(question);
   };
