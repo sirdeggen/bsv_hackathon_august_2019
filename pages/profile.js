@@ -8,8 +8,37 @@ import Layout from '../components/layout'
 class Profile extends Page {
   render () {
     return (
-      <Layout {...this.props} navmenu={false} container={false} />
+      <Layout {...this.props} navmenu={false} container={false}>
+        <Container>
+          {this.getGreeting()}
+          <ListGroup id="profileQuestionsOverview"/>
+          <ListGroup id="profileAnswersOverview" />
+        </Container>
+      </Layout>
     )
+  }
+
+  getGreeting = () => {
+    if(this.props.session && this.props.session.user){
+      return (
+        <div id="profileGreeting">Hello {this.props.session.user.name}</div>
+      )
+    }
+    else {
+      return null;
+    }
+  }
+
+
+  componentDidMount() {
+    fetch("/questions/all", { headers: {q:null, l:25} })
+      .then(res => res.json())
+      .then(data => this.displayQuestions(data))
+      .catch(err => console.log("Error getting Questions", err));
+  }
+
+  displayQuestions = () => {
+    console.log(data)
   }
 }
 

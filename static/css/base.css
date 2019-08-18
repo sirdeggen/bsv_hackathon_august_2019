@@ -26,3 +26,7 @@
 .questionsListItem:hover {
     background-color: #00000010
 }
+
+#profileGreeting {
+    text-align: right;
+}
