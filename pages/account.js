@@ -60,6 +60,7 @@ export default class extends Page {
     var address = atwIdentity.publicKey.toAddress().toString();
     var privateK = atwIdentity.privateKey.toWIF();
     document.querySelector("input[name='bsvAddress']").value = address
+
     console.log(privateK);
   }
 
