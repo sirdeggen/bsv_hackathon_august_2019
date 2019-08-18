@@ -42,7 +42,7 @@ module.exports = (expressApp, functions) => {
 
       questionsCollection
         .insertOne(question)
-        .then(data => res.status(200).json(data))
+        .then(data => res.status(200).json(question))
         .catch(err => res.status(500).json(err));
     } else {
       console.log("not logged in");
