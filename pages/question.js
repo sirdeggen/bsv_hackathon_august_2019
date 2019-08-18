@@ -34,8 +34,8 @@ class Question extends Page {
     `;
     for (let a = 0; a < data.answers.length; a++) {
       const ans = data.answers[a];
-      let approval = ans.response.approval !== null ? "yes" : "no";
-      window.question.innerHTML += `<div class='answer card border-dark mb-3 ${approval}'>${ans.text}</div>`;
+      let approval = ans.response ? ans.response.approval : "";
+      window.singleQuestionFull.innerHTML += `<div class='answer card border-dark mb-3 ${approval}'>${ans.text}</div>`;
     }
   }
 
