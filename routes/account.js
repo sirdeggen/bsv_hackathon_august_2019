@@ -19,6 +19,7 @@ module.exports = (expressApp, functions) => {
           res.json({
             name: user.name,
             email: user.email,
+            bsvAddress: user.bsvAddress,
             emailVerified: !!(user.emailVerified && user.emailVerified === true)
           });
         })
@@ -43,6 +44,10 @@ module.exports = (expressApp, functions) => {
 
           if (req.body.name) {
             user.name = req.body.name;
+          }
+
+          if (req.body.bsvAddress) {
+            user.bsvAddress = req.body.bsvAddress;
           }
 
           if (req.body.email) {

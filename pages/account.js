@@ -22,6 +22,7 @@ export default class extends Page {
       isSignedIn: !!props.session.user,
       name: "",
       email: "",
+      bsvAddress: "",
       emailVerified: false,
       alertText: null,
       alertStyle: null
@@ -29,6 +30,7 @@ export default class extends Page {
     if (props.session.user) {
       this.state.name = props.session.user.name;
       this.state.email = props.session.user.email;
+      this.state.bsvAddress = props.session.user.bsvAddress;
     }
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -46,16 +48,20 @@ export default class extends Page {
     const cookies = new Cookies();
     cookies.set("redirect_url", window.location.pathname, { path: "/" });
 
-    this.getProfile();
-
-    try {
-      this.createAddressPair();
-      console.log("atw_privateKey Safely in localStorage");
-      this.copyWIF();
-      console.log("atw_privateKey Copied to the clipboard");
-    } catch (er) {
-      console.log("FAIL: private key not stored!\n" + err);
+    if(!session.user.bsvAddress) {
+      try {
+        this.createAddressPair();
+        console.log("atw_privateKey Safely in localStorage");
+        var forceAddress = this.copyWIF();
+        console.log("atw_privateKey Copied to the clipboard");
+      } catch (er) {
+        console.log("FAIL: private key not stored!\n" + er);
+      }
+    } else {
+      console.log('Already assigned an address, create new?')
     }
+
+    this.getProfile();
   }
 
   createAddressPair() {
@@ -74,6 +80,7 @@ export default class extends Page {
       <button type="button" class="close" data-dismiss="alert">&#10697;</button>
       <strong>Click to Copy Your PrivateKey</strong>
     </div>`;
+    return address;
   }
 
   copyWIF() {
@@ -103,8 +110,10 @@ export default class extends Page {
         this.setState({
           name: user.name,
           email: user.email,
+          bsvAddress: user.bsvAddress,
           emailVerified: user.emailVerified
         });
+        console.log('bsvAddress: ' + user.bsvAddress)
       });
   }
 
@@ -126,7 +135,8 @@ export default class extends Page {
     const formData = {
       _csrf: await NextAuth.csrfToken(),
       name: this.state.name || "",
-      email: this.state.email || ""
+      email: this.state.email || "",
+      bsvAddress: this.state.bsvAddress || ""
     };
 
     // URL encode form
@@ -246,7 +256,7 @@ export default class extends Page {
                       name="wif"
                       id="wif"
                       disabled
-                      value={this.state.bsvAddress}
+                      value={this.state.bsvWIF}
                       onChange={this.handleChange}
                     />
                   </Col>
