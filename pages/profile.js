@@ -45,15 +45,54 @@ class Profile extends Page {
 
   componentDidMount = () => {
     var userID = this.props.session.user.id
-    fetch("/questions/user/" + userID, { headers: { l: 25 } })
+    fetch("/questions/user/" + userID, { headers: { l: 10 } })
       .then(res => res.json())
       .then(data => this.displayQuestions(data))
       .catch(err => console.log("Error getting Questions", err));
   }
 
   displayQuestions = data => {
-    console.log(data);
-  };
+    console.log("Questions", data);
+    var ul = window.profileQuestionsOverview;
+
+    $("<h2>").append("Recent Questions").appendTo(ul);
+
+    for (let i = 0; i < data.length; i++) {
+      const q = data[i];
+
+      $("<a>")
+        .attr("href", "/question?id=" + q._id)
+        .addClass("questionsListItem")
+        .append(
+          $("<div>")
+            .addClass("row")
+            .append(
+              $("<span>")
+                .addClass("col-8")
+                .append(q.title)
+                .addClass("questionTitle")
+            )
+            .append(
+              $("<span>")
+                .append(q.answers.length + " answers")
+                .addClass("col-2")
+                .addClass("questionAnswerCount")
+            )
+            .append(
+              $("<span>")
+                .addClass("questionPromised")
+                .addClass("col-2")
+                .append(
+                  q.proofs
+                    .filter(p => p.type == "promise")
+                    .map(p => parseInt(p.amount))
+                    .reduce((a, b) => a + b, 0) + " satoshis"
+                )
+            )
+        )
+        .appendTo(ul);
+    }
+  }
 }
 
 export default Profile;
