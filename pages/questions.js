@@ -64,6 +64,8 @@ class Questions extends Page {
                 .addClass('text-muted')
                 .css("overflow", "hidden")
                 .css("padding-left", "10px")
+                .css("text-overflow", "elipsis")
+                .css("overflow", "hidden")
                 .css("white-space", "nowrap")
             )
           )

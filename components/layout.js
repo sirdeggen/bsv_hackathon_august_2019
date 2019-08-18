@@ -77,6 +77,7 @@ export default class extends React.Component {
           <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
           <link href="../static/css/base.css" rel="stylesheet" />
           <script src="../static/js/jquery.js" />
+          <script src="https://unpkg.com/bsv@0.26.4/bsv.min.js" />
         </Head>
         <MainBody
           navmenu={this.props.navmenu}

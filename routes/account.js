@@ -104,4 +104,15 @@ module.exports = (expressApp, functions) => {
         .json({ error: "Must be signed in to log out of profile" });
     }
   });
+
+  // assuming an address comes from client side then do this:
+  expressApp.post("/account/address", (req, res) => {
+    if (req.user) {
+      req.user.id
+    } else {
+      return res
+        .status(403)
+        .json({ error: "Must be signed in to create address" });
+    }
+  });
 };

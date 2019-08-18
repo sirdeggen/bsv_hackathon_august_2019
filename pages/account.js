@@ -8,6 +8,7 @@ import Page from '../components/page'
 import Layout from '../components/layout'
 import Cookies from 'universal-cookie'
 
+
 export default class extends Page {
   static async getInitialProps ({ req }) {
     let props = await super.getInitialProps({ req })
@@ -47,6 +48,19 @@ export default class extends Page {
     cookies.set('redirect_url', window.location.pathname, { path: '/' })
 
     this.getProfile()
+
+    this.createAddressPair()
+
+  }
+
+  createAddressPair() {
+    var bsv = require("bsv");
+    var HDpriv = bsv.HDPrivateKey.fromRandom();
+    var atwIdentity = HDpriv.deriveChild("m/0/3/2/1");
+    var address = atwIdentity.publicKey.toAddress().toString();
+    var privateK = atwIdentity.privateKey.toWIF();
+    document.querySelector("input[name='bsvAddress']").value = address
+    console.log(privateK);
   }
 
   getProfile () {
@@ -151,6 +165,12 @@ export default class extends Page {
                   <Label sm={2}>Email:</Label>
                   <Col sm={10} md={8}>
                     <Input name='email' value={(this.state.email.match(/.*@localhost\.localdomain$/)) ? '' : this.state.email} onChange={this.handleChange} />
+                  </Col>
+                </FormGroup>
+                <FormGroup row>
+                  <Label sm={2}>BSV Address:</Label>
+                  <Col sm={10} md={8}>
+                    <Input name='bsvAddress' disabled value={this.state.bsvAddress} onChange={this.handleChange} />
                   </Col>
                 </FormGroup>
                 <FormGroup row>

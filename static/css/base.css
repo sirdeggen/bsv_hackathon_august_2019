@@ -71,3 +71,8 @@
 #newQuestionWrapper > *{
     margin-top:1em;
 }
+.approvedBSV {
+  background-color: #eab300;
+  font-size: 16px;
+  float: right;
+}

@@ -49,12 +49,16 @@ class Question extends Page {
       var ans = partAnswers[a];
       var apprcolor = "";
       var apprtitle = "";
+      var earned = "";
       // style depends on response types
       if (ans.response) {
         apprcolor = ans.response.approval
           ? "border-success"
           : "bg-secondary border-danger faded";
         apprtitle = ans.response.approval ? "Approved" : "Invalid";
+        earned = ans.response.approval
+          ? `<span class="badge badge-success approvedBSV">Earned &#8383;SV</span>`
+          : "";
       } else {
         apprcolor = "bg-light";
         apprtitle = "Not Yet Approved";
@@ -67,9 +71,9 @@ class Question extends Page {
       }
       apprtitle += ans.ontime ? " - On Time" : " - Late";
       allAnswers += `<div class='answer card mb-3 ${apprcolor}'>
-      <div class="card-header">${apprtitle}</div><div class="card-body">${ans.text}</div></div>`;
+      <div class="card-header">${earned}${apprtitle}</div><div class="card-body">${ans.text}</div></div>`;
     }
-    
+
     for (let a = 0; a < first.length; a++) {
       addAnswer(a, first);
     }
