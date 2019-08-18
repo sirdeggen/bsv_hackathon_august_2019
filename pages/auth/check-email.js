@@ -15,7 +15,7 @@ export default class extends Page {
       if (req) {
         res.redirect('/auth/callback')
       } else {
-        Router.push('/auth/callback')
+        Router.push('/')
       }
     }
 

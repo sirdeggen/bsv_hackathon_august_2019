@@ -61,12 +61,27 @@ class Secret extends Page {
     });
   };
 
+  // delete specificquestion for now some random one
+  deleteAllData = () => {
+    console.log(this.props.session.csrfToken);
+    fetch(`/secret/deleteAll/`, {
+      method: "DELETE",
+      body: JSON.stringify({}),
+      credentials: "include",
+      headers: {
+        "Content-Type": "x-www-form-urlencoded",
+        "x-csrf-token": this.props.session.csrfToken
+      }
+    });
+  };
+
   render() {
     if(this.props.session && this.props.session.user){
       return (
         <Layout {...this.props} navmenu={false} container={false}>
-          <Button onClick={this.generate}>GENERATE</Button>
-          <Button onClick={this.deleteData}>DELETE</Button>
+          <Button onClick={this.generate}>GENERATE Mocks</Button><br/>
+          <Button onClick={this.deleteData}>DELETE Mocks</Button><br/>
+          <Button onClick={this.deleteAllData}>DELETE ALL QUESTIONS</Button><br/>
         </Layout>
       );
     }
