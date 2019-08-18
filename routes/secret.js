@@ -1,54 +1,51 @@
+const MongoClient = require("mongodb").MongoClient;
+const mockData = require("../static/mockData/question.json");
 
-const MongoClient = require('mongodb').MongoClient
-const mockData = require('../static/mockData/question.json')
-
-let usersCollection
-let questionsCollection
+let usersCollection;
+let questionsCollection;
 if (process.env.MONGO_URI) {
   // Connect to MongoDB Database and return user connection
   MongoClient.connect(process.env.MONGO_URI, (err, mongoClient) => {
-    if (err) throw new Error(err)
-    const dbName = process.env.MONGO_URI.split('/').pop().split('?').shift()
-    const db = mongoClient.db(dbName)
-    usersCollection = db.collection('users')
-    questionsCollection = db.collection('questions')
-  })
+    if (err) throw new Error(err);
+    const dbName = process.env.MONGO_URI.split("/")
+      .pop()
+      .split("?")
+      .shift();
+    const db = mongoClient.db(dbName);
+    usersCollection = db.collection("users");
+    questionsCollection = db.collection("questions");
+  });
 }
 
-async function newQuestion (data) {
-  var res = await questionsCollection.insertMany(data)
-  console.log(res)
-  return res
-}
-
-async function deleteQuestion (ids) {
-  var res = await questionsCollection.deleteOne({ '_id': ids })
-  console.log(res)
-  return res
-}
-
-module.exports = (expressApp) => {
-  expressApp.post('/secret/generateData', (req, res) => {
-    console.log('generate test data')
+module.exports = expressApp => {
+  expressApp.post("/secret/generateData", (req, res) => {
+    console.log("generate test data");
     if (req.user) {
-      console.log('logged in')
-      var result = newQuestion([JSON.parse(JSON.stringify(mockData))])
-      return res.status(200).json(result)
+      console.log("logged in");
+      var result = questionsCollection
+        .insertMany([JSON.parse(JSON.stringify(mockData))])
+        .then(data => res.status(200).json(result))
+        .catch(err => res.status(500).json(err));
     } else {
-      console.log('not logged in')
-      return res.status(403).json({ error: 'Must be signed in to get profile' })
+      console.log("not logged in");
+      return res
+        .status(403)
+        .json({ error: "Must be signed in do that" });
     }
-  })
+  });
 
-  expressApp.delete('/secret/delete/:id', (req, res) => {
-    console.log(`delete question ${req.params.id}`)
+  expressApp.delete("/secret/delete/", (req, res) => {
     if (req.user) {
-      console.log('logged in')
-      var result = deleteQuestion(req.params.id)
-      return res.status(200).json(result)
+      console.log("logged in");
+      var result = questionsCollection
+        .deleteMany({ mock: true })
+        .then(data => res.status(200).json(result))
+        .catch(err => res.status(500).json(err));
     } else {
-      console.log('not logged in')
-      return res.status(403).json({ error: 'Must be signed in to get profile' })
+      console.log("not logged in");
+      return res
+        .status(403)
+        .json({ error: "Must be signed in to do that" });
     }
-  })
-}
+  });
+};
