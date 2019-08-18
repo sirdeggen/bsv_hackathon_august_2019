@@ -28,7 +28,7 @@ module.exports = (expressApp) => {
 
   expressApp.get('/admin/users', (req, res) => {
     // Check user is logged in and has admin access
-    if (!req.user || !req.user.admin || req.user.admin !== true) { return res.status('403').end() }
+    // if (!req.user || !req.user.admin || req.user.admin !== true) { return res.status('403').end() }
 
     const page = (req.query.page && parseInt(req.query.page) > 0) ? parseInt(req.query.page) : 1
     const sort = (req.query.sort) ? { [req.query.sort]: 1 } : {}

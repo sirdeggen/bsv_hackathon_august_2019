@@ -1,5 +1,8 @@
 {
   "userId": 1,
   "name": "Darren Kellenschwiler",
-  "email": "deggen@probat.us"
+  "email": "deggen@probat.us",
+  "interests": {
+    ["#bsv", "#coding", "#javascript"]
+  }
 }
