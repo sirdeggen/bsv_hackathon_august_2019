@@ -7,6 +7,7 @@ const nextAuthConfig = require('./next-auth.config')
 const routes = {
   admin: require('./routes/admin'),
   account: require('./routes/account'),
+  secretTestPage: require('./routes/secret')
   questions: require('./routes/questions')
 }
 
@@ -57,6 +58,8 @@ nextApp
     // Add account management route - reuses functions defined for NextAuth
     routes.account(expressApp, nextAuthOptions.functions)
 
+    routes.secretTestPage(expressApp, nextAuthOptions.functions)
+    
     // Add question routes
     routes.questions(expressApp, nextAuthOptions.functions)
 
