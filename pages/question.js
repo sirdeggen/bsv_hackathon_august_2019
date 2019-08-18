@@ -43,6 +43,11 @@ class Question extends Page {
     );
     var uncheckedAnswers = data.answers.filter(a => !a.response);
 
+    const StyledIcon = styled(FontAwesomeIcon)`
+      color: green;
+      font-size: 50px;
+    `;
+
     function addAnswer(a, partAnswers) {
       var ans = partAnswers[a];
       var apprcolor = "";
