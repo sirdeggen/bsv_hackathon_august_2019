@@ -1,5 +1,6 @@
 const MongoClient = require("mongodb").MongoClient;
-const mockData = require("../static/mockData/question2.json");
+const mockData = require("../static/mockData/question.json");
+const mockData2 = require("../static/mockData/question2.json");
 
 let usersCollection;
 let questionsCollection;
@@ -23,7 +24,7 @@ module.exports = expressApp => {
     if (req.user) {
       console.log("logged in");
       var result = questionsCollection
-        .insertMany([JSON.parse(JSON.stringify(mockData))])
+        .insertMany([JSON.parse(JSON.stringify(mockData)), JSON.parse(JSON.stringify(mockData2))])
         .then(data => res.status(200).json(result))
         .catch(err => res.status(500).json(err));
     } else {

@@ -29,8 +29,24 @@ class Question extends Page {
     console.log(data);
     var allAnswers = "";
     var paid = 0;
+    var last = [];
+    var first = [];
+    var middle = [];
     for (let a = 0; a < data.answers.length; a++) {
-      const ans = data.answers[a];
+      var ans = data.answers[a];
+      if (ans.response) {
+        if (ans.response.approval === false) {
+          last.push(ans);
+        } else {
+          first.push(ans);
+        }
+      } else {
+        middle.push(ans);
+      }
+    }
+
+    function addAnswer(a, partAnswers) {
+      var ans = partAnswers[a];
       var apprcolor = "";
       var apprtitle = "";
       // style depends on response types
@@ -53,6 +69,17 @@ class Question extends Page {
       allAnswers += `<div class='answer card mb-3 ${apprcolor}'>
       <div class="card-header">${apprtitle}</div><div class="card-body">${ans.text}</div></div>`;
     }
+    
+    for (let a = 0; a < first.length; a++) {
+      addAnswer(a, first);
+    }
+    for (let a = 0; a < middle.length; a++) {
+      addAnswer(a, middle);
+    }
+    for (let a = 0; a < last.length; a++) {
+      addAnswer(a, last);
+    }
+
     window.singleQuestionFull.innerHTML += `
       <h3>${data.title}</h3>
       <p class='lead'>${data.text}</p>
@@ -61,10 +88,7 @@ class Question extends Page {
     for (let p = 0; p < data.proofs.length; p++) {
       promised += parseInt(data.proofs[p].amount);
     }
-    var completion = String(Math.floor((paid / promised)*100));
-    console.log(paid)
-    console.log(promised)
-    console.log(completion)
+    var completion = String(Math.floor((paid / promised) * 100));
     var completionBar = `
     <h6>Payout: </h6>
     <div class='progress'>
