@@ -1,0 +1,54 @@
+{
+  "title": "What does the fromRandom() method do?",
+  "text": "What does the method bsv.HDPrivateKey.fromRandom() do in the #bsvlibrary? #javascript #bsv",
+  "userId": 1,
+  "timestamp": "1566112360",
+  "expiry": "1566371520",
+  "proof": [
+    {
+      "type": "inquestion",
+      "amount": "800000",
+    },
+    {
+      "type": "promise",
+      "amount": "8000000",
+    }
+  ],
+  "answers": [
+    {
+      "text": "The fromRandom() method uses a pretty good random number generator to salt the creation of a PrivateKey object, which you can then derive an address from etc.",
+      "userId": 2,
+      "timestamp": "1566171520",
+      "ontime": true,
+      "response": {
+        "approval": true,
+        "payment": {
+          "txId": "5657b8131b24fb801c96de00d8740601d6b8d6f7e0fa2f6cd76aac0505e9cd9e",
+          "amount": "8000000",
+          "message": "Thanks! This was a very helpful answer."
+        }
+      }
+    },
+    {
+      "text": "I have no idea but would you like to buy my cereal?",
+      "userId": 3,
+      "timestamp": "1566170520",
+      "ontime": true,
+      "response": {
+        "approval": false
+      }
+    },
+    {
+      "text": "This answer hasn't been seen by the asker yet. Perhaps it's useful - who knows?",
+      "userId": 4,
+      "timestamp": "1566190520",
+      "ontime": true
+    },
+    {
+      "text": "Super helpful answer but it's too late, so payment is at discretion of the asker.",
+      "userId": 5,
+      "timestamp": "1566372520",
+      "ontime": false
+    }
+  ]
+}
