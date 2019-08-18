@@ -32,6 +32,18 @@ class Ask extends Page {
   }
 
   render() {
+    if (!this.props.session || !this.props.session.user) {
+      return (
+        <Layout {...this.props} navmenu={false} container={false}>
+          <h2>You need to be logged in in order to Ask a question.</h2>
+          <h4>Once you enter your account, you will be able to ask your question.</h4>
+          <Link id="loginRedirectLink" href="/auth?redirect=/ask">
+            <Button className="btn btn-outline-primary">Click here to Login</Button>
+          </Link>
+        </Layout>
+      );
+    }
+
     return (
       <Layout {...this.props} navmenu={false} container={false}>
         <Container id="newQuestionWrapper">
@@ -121,6 +133,10 @@ class Ask extends Page {
   };
 
   componentDidMount() {
+    if (!this.props.session || !this.props.session.user) {
+      return;
+    }
+
     window.questionDetailsInput.onkeyup = this.updateTags;
     this.updateTags();
     window.newQuestionSubmit.onclick = this.submitQuestion;
