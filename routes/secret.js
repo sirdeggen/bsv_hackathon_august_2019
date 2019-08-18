@@ -49,4 +49,19 @@ module.exports = expressApp => {
         .json({ error: "Must be signed in to do that" });
     }
   });
+
+  expressApp.delete("/secret/deleteAll/", (req, res) => {
+    if (req.user) {
+      console.log("logged in");
+      var result = questionsCollection
+        .deleteMany()
+        .then(data => res.status(200).json(result))
+        .catch(err => res.status(500).json(err));
+    } else {
+      console.log("not logged in");
+      return res
+        .status(403)
+        .json({ error: "Must be signed in to do that" });
+    }
+  });
 };
