@@ -9,6 +9,7 @@ const routes = {
   account: require('./routes/account'),
   secretTestPage: require('./routes/secret'),
   questions: require('./routes/questions'),
+  ask: require('./routes/ask'),
 }
 
 // Load environment variables from .env file if present
@@ -59,6 +60,8 @@ nextApp
     routes.account(expressApp, nextAuthOptions.functions)
 
     routes.secretTestPage(expressApp, nextAuthOptions.functions)
+
+    routes.ask(expressApp, nextAuthOptions.functions)
 
     // Add question routes
     routes.questions(expressApp, nextAuthOptions.functions)

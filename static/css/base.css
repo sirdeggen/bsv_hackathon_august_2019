@@ -67,3 +67,7 @@
 .faded {
   opacity: 0.2;
 }
+
+#newQuestionWrapper > *{
+    margin-top:1em;
+}
