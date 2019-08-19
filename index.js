@@ -58,8 +58,6 @@ nextApp
     // Add account management route - reuses functions defined for NextAuth
     routes.account(expressApp, nextAuthOptions.functions)
 
-    routes.secretTestPage(expressApp, nextAuthOptions.functions)
-
     routes.ask(expressApp, nextAuthOptions.functions)
 
     // Add question routes
