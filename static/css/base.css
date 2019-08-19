@@ -80,3 +80,27 @@
 #questionPostAnswerWrapper {
     margin:10px;
 }
+
+.cardApprove {
+  font-size: 25px;
+  color: hsla(122, 64%, 44%, 1);
+  cursor: pointer;
+  float: right;
+  padding: 3px;
+}
+
+.cardApprove:hover{
+  color: hsl(122, 64%, 34%);
+}
+
+.cardDisapprove:hover {
+  color: hsl(3, 100%, 41%);
+}
+
+.cardDisapprove {
+  font-size: 25px;
+  color: hsl(3, 100%, 61%);
+  cursor: pointer;
+  float: right;
+  padding: 3px 30px 3px 3px;
+}

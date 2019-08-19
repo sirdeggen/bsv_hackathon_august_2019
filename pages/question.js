@@ -48,7 +48,7 @@ class Question extends Page {
       var apprcolor = "";
       var apprtitle = "";
       var earned = "";
-      var cardActions = `<i class="fas fa-check-square"></i>`;
+      var cardActions = `<i class="fas fa-check-square cardApprove"></i><i class="fas fa-ban cardDisapprove"></i>`;
       // style depends on response types
       if (ans.response) {
         apprcolor = ans.response.approval
