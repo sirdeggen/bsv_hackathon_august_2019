@@ -44,9 +44,9 @@
     "fsevents": "*"
   },
   "scripts": {
-    "dev": "pm2 start \"next -p 8443\" & pm2 start \"node api/api.js\"",
+    "dev": "cross-env NODE_ENV=development PORT=3000 node index.js",
     "build": "next build",
-    "start": "pm2 start \"next start -p 8443\" & pm2 start \"node api/api.js\"",
+    "start": "pm2 start \"node index.js\"",
     "stop": "pm2 delete all"
   },
   "engines": {
