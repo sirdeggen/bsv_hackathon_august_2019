@@ -126,7 +126,7 @@ class Question extends Page {
     var answerApproves = document.querySelectorAll(".cardApprove");
     answerApproves.forEach(a => {
       var targetMBid = "target-" + bsv.PrivateKey.fromRandom().toString().substr(0,10);
-      a.parentElement.parentElement.innerHTML += "<div class='mbTarget' id='" + targetMBid + "'></div>";
+      a.parentElement.parentElement.appendChild("<div class='mbTarget' id='" + targetMBid + "'></div>");
       a.addEventListener("click", function(event) {
         var authorId = String(a.attributes.author.value);
         var authorDetails = authorsAddresses[0].filter(
@@ -137,13 +137,8 @@ class Question extends Page {
         if (amountToOffer <= 0) {
           amountToOffer = 1000000;
         }
-        console.log(amountToOffer);
         console.log("Pay " + authorAddress + amountToOffer + " satsoshis");
-        moneyButton.render(targetMBid, {
-          to: "d@moneybutton.com",
-          amount: "0.01",
-          currency: "GBP"
-        });
+
       });
     });
   }
