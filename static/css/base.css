@@ -81,6 +81,7 @@
 
 #questionPostAnswerWrapper {
   margin: 10px;
+  clear: left;
 }
 
 .cardApprove {

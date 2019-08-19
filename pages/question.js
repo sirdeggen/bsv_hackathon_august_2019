@@ -15,6 +15,8 @@ import Layout from "../components/layout";
 import QuestionFull from "../components/questionFull";
 import fetch from "isomorphic-fetch";
 
+
+
 class Question extends Page {
   componentDidMount() {
     var urlParams = new URLSearchParams(window.location.search);
@@ -27,6 +29,7 @@ class Question extends Page {
         this.displayAnswerInput(data);
       })
       .catch(err => console.log("Error getting Question", err));
+
   }
 
   displayQuestion(data) {
@@ -101,6 +104,21 @@ class Question extends Page {
     window.singleQuestionFull.innerHTML += completionBar;
     console.log(allAnswers);
     window.singleQuestionFull.innerHTML += allAnswers;
+
+    answerApproves = document.querySelectorAll('.cardApprove')
+    answerApproves.forEach((a) => {
+      a.addEventListener('click', function(event) {
+        // this.card's author's paymail
+        //render a moneybutton to them
+        const mb1 = document.getElementById('my-money-button')
+        moneyButton.render(mb1, {
+          to: answerAuthor,
+          amount: paymentAmount,
+          currency: "BSV"
+        })
+      });
+    });
+
   }
 
   displayAnswerInput = data => {
