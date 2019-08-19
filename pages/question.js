@@ -70,9 +70,7 @@ class Question extends Page {
       }
       apprtitle += ans.ontime ? " - On Time" : " - Late";
       allAnswers += `<div class='answer card mb-3 ${apprcolor}'>
-      <div class="card-header">${earned}${apprtitle}${cardActions}</div><div class="card-body">${
-        ans.text
-      }</div></div>`;
+      <div class="card-header">${earned}${apprtitle}${cardActions}</div><div class="card-body">${ans.text}</div></div>`;
     }
 
     for (let a = 0; a < paidAnswers.length; a++) {
@@ -95,11 +93,10 @@ class Question extends Page {
     }
     var completion = String(Math.floor((paid / promised) * 100));
     var completionBar = `
-    <h6>Payout: </h6>
+    <i class="fas fa-hand-holding-usd moneyBar"></i>
     <div class='progress'>
       <div class='progress-bar bg-success' role='progressbar' style='width: ${completion}%' aria-valuenow='${completion}' aria-valuemin='0' aria-valuemax='100'></div>
     </div>
-    <hr>
     <div id="questionPostAnswerWrapper"></div>`;
     window.singleQuestionFull.innerHTML += completionBar;
     console.log(allAnswers);
