@@ -16,7 +16,7 @@ The right incentives change everything.
   - Rewarding answers to your questions requires MoneyButton right now. This is the biggest barrier we have.
 
 - AskTheWorld motivates people to share valuable information
-  - instead of putting barriers in front of information, we motivate people a potential reward, but ONLY if the question author approves the answer.
+  - instead of putting barriers in front of information, we motivate people with a potential reward, but ONLY if the question author approves the answer.
   - "Information wants to be valued." - Someone Very Smart
 
 - To deal with possible question authors who never pay what they promised, we use reputation as an incentive
