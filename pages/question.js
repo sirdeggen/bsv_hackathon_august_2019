@@ -124,7 +124,12 @@ class Question extends Page {
             String(item._id) === authorId
           );
         var authorAddress = authorDetails[0].bsvAddress;
-        console.log("paymail of Author: " + (authorAddress || "nope"));
+        //moneybutton to that address
+        var amountToOffer = promised - paid;
+        if(amountToOffer <= 0){amountToOffer = 1000000}
+        console.log(amountToOffer)
+        //createPaymentButton(authorAddress, amountToOffer)
+        console.log("Pay " + authorAddress + amountToOffer + " satsoshis");
       });
     });
   }
