@@ -57,12 +57,13 @@ module.exports = (expressApp, functions) => {
       .toString()
       .split(",")
       .map(i => ObjectId(i));
-
+    console.log('here')
     usersCollection
       .find({ _id: { $in: idlist } })
       .limit(idlist.length)
       .toArray((err, users) => {
         if (err) {
+          console.log(err)
           return res.status(500).json(err);
         } else {
           res.status(200).json(

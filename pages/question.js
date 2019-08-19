@@ -65,10 +65,12 @@ class Question extends Page {
         apprtitle = "Not Yet Approved";
       }
       // progress bar percentage calculation
+      var payamount = ""
       try {
-        paid += parseInt(ans.response.payment.amount);
+        payamount = ans.response.payment.amount
+        paid += parseInt(payamount);
       } catch (er) {
-        console.log(er);
+        ;
       }
       apprtitle += ans.ontime ? " - On Time" : " - Late";
       allAnswers += `<div class='answer card mb-3 ${apprcolor}'>
@@ -107,10 +109,11 @@ class Question extends Page {
       .filter((v, i, a) => a.indexOf(v) === i)
       .join(',')
 
-    console.log(idlist);
+    console.log(idlist)
+
     fetch("/account/many", { headers: { idlist: { idlist } } })
       .then(res => res.json())
-      .then(res => (console.log(res)))
+      .then(users => (console.log(users)))
       .catch(err => console.log(err));
 
     var answerApproves = document.querySelectorAll(".cardApprove");
