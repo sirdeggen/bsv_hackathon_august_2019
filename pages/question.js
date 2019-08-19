@@ -33,7 +33,7 @@ class Question extends Page {
           x.parentElement.style.display = "none"
         })
       })
-    }
+  }
 
   displayQuestion (data) {
     console.log(data)
@@ -148,7 +148,7 @@ class Question extends Page {
         const divil = document.getElementById(`${targetMBid}`)
         console.log(divil)
         var dataSend = {
-          "userId": ObjectId("5d598a318dd6ed998b373b77"),
+          "answerId": [ data._id, authorId ],
           "ontime": ( Date.now() <= data.expirey ),
           "approval": true,
           "message": "Thanks! This was a very helpful answer."
@@ -156,14 +156,20 @@ class Question extends Page {
         // future release you can customise this thank you message above
         moneyButton.render(divil, {
           to: authorAddress,
-          amount: amountToOffer,
+          amount: (amountToOffer >= 0.00001000) ? amountToOffer : 0.00001000,
           editable: false,
           currency: 'BSV',
           type: 'buy',
-          buttonData: JSON.stringify(dataSend)
+          buttonData: JSON.stringify(dataSend),
+          onPayment: paidForAnswer
         })
       })
     })
+    function paidForAnswer (payment) {
+      document.querySelectorAll('.close').click()
+      console.log(payment)
+
+    }
   }
 
   displayAnswerInput (data) {
