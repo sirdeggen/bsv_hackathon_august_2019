@@ -55,7 +55,7 @@ module.exports = (expressApp, functions) => {
   expressApp.get("/account/many", (req, res) => {
     var idlist = (req.headers.idlist || "")
       .toString()
-      .split("-")
+      .split(",")
       .map(i => ObjectId(i));
 
     usersCollection
@@ -67,7 +67,7 @@ module.exports = (expressApp, functions) => {
         } else {
           res.status(200).json(
             users.map(u => {
-              return { _id: u._id, name: u.name };
+              return { _id: u._id, name: u.name, bsvAddress: u.bsvAddress || '' };
             })
           );
         }

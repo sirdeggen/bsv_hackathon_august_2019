@@ -29,7 +29,7 @@ class Questions extends Page {
         var idlist = data
           .map(q => q.userId)
           .filter((v, i, a) => a.indexOf(v) === i)
-          .join("-");
+          .join(",");
 
         fetch("/account/many", { headers: { idlist: idlist } })
           .then(res => res.json())
@@ -40,6 +40,8 @@ class Questions extends Page {
   }
 
   displayQuestions(data, users) {
+    console.log(users)
+
     var table = window.questionsList;
 
     data = data.map(q => {
