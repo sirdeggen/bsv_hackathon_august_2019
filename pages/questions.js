@@ -58,7 +58,7 @@ class Questions extends Page {
       .addClass("table")
       .append(
         $("<div>").addClass("row bg-primary text-white").css("padding", "10px")
-    
+
         .append($("<div>").addClass("col-md-6 col-sm-12").append("Questions"))
         .append($("<div>").addClass("col-md-2 col-sm-4").append("Answers"))
         .append($("<div>").addClass("col-md-2 col-sm-4").append("Author"))

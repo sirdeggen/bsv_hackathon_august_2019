@@ -109,8 +109,6 @@ class Question extends Page {
       .filter((v, i, a) => a.indexOf(v) === i)
       .join(',')
 
-    console.log(idlist)
-
     var authorsAddresses = []
     authorsAddresses = fetch("/account/many", { headers: { idlist: idlist } })
       .then(res => res.json())
@@ -124,7 +122,10 @@ class Question extends Page {
     answerApproves.forEach(a => {
       a.addEventListener("click", function(event) {
         //render a moneybutton to this.card's author's paymail
-        var authorAddress = a.attributes.author.value;
+        var authorId = a.attributes.author.value;
+        authorsAddresses
+          .map(q => authorId)
+          .filter((v, i, a) => a.indexOf(v) === i)
         console.log("userId of Author: " + (author || "nope"));
       });
     });

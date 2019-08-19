@@ -7,7 +7,6 @@ const nextAuthConfig = require('./next-auth.config')
 const routes = {
   admin: require('./routes/admin'),
   account: require('./routes/account'),
-  secretTestPage: require('./routes/secret'),
   questions: require('./routes/questions'),
   ask: require('./routes/ask'),
 }
@@ -65,7 +64,7 @@ nextApp
 
     // Add question routes
     routes.questions(expressApp, nextAuthOptions.functions)
-    
+
     // Serve fonts from ionicon npm module
     expressApp.use('/fonts/ionicons', express.static('./node_modules/ionicons/dist/fonts'))
 

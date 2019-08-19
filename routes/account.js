@@ -57,7 +57,7 @@ module.exports = (expressApp, functions) => {
       .toString()
       .split(",")
       .map(i => ObjectId(i));
-    console.log('here')
+    console.log(idlist);
     usersCollection
       .find({ _id: { $in: idlist } })
       .limit(idlist.length)
