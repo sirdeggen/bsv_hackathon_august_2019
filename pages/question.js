@@ -147,7 +147,7 @@ class Question extends Page {
         console.log('Pay ' + authorAddress + ' ' + amountToOffer + ' BSV')
         const divil = document.getElementById(`${targetMBid}`)
         console.log(divil)
-        datatoSend = JSON.stringify({ "this": "data" })
+        var datatoSend = JSON.stringify({ "this": "" })
         moneyButton.render(divil, {
           to: authorAddress,
           amount: amountToOffer,
