@@ -138,3 +138,7 @@ a:hover {
   float: right;
   max-width: 50%;
 }
+
+.alert-dismissible{
+  display: none;
+}

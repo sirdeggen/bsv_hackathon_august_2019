@@ -132,12 +132,13 @@ class Question extends Page {
       console.log(targetMBid)
       document.getElementById('target').innerHTML += targetHTML
       a.addEventListener('click', function (event) {
-        // render a moneybutton to this.card's author's paymail
+        document.querySelector('.alert-dismissible').style.display = 'block'
         var authorId = String(a.attributes.author.value)
         var authorDetails = authorsAddresses[0].filter(
           item => String(item._id) === authorId
         )
         var authorAddress = authorDetails[0].bsvAddress
+        document.querySelector('.authorMoneyButton').innerText = authorDetails[0].name
         // moneybutton to that address
         var amountToOffer = (promised - paid) / 100000000.0
         if (amountToOffer <= 0) {
@@ -146,11 +147,14 @@ class Question extends Page {
         console.log('Pay ' + authorAddress + ' ' + amountToOffer + ' BSV')
         const divil = document.getElementById(`${targetMBid}`)
         console.log(divil)
+        datatoSend = JSON.stringify({ "this": "data" })
         moneyButton.render(divil, {
           to: authorAddress,
           amount: amountToOffer,
+          editable: false,
           currency: 'BSV',
-          type: 'buy'
+          type: 'buy',
+          buttonData: {datatoSend}
         })
       })
     })
@@ -203,7 +207,7 @@ class Question extends Page {
     return (
       <Layout {...this.props} navmenu={false} container={false}>
         <QuestionFull />
-        <div className="alert alert-dismissible alert-secondary moneybuttonContainer">
+        <div className="alert alert-dismissible alert-primary moneybuttonContainer">
           <button type="button" className="close" data-dismiss="alert" >&times;
           </button>
           <strong>Great!</strong> We're so pleased you've found one of the answers you were looking for. Please swipe the moneybutton to send your promised reward to this responder.
