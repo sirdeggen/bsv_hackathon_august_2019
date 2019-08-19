@@ -15,8 +15,6 @@ import Layout from "../components/layout";
 import QuestionFull from "../components/questionFull";
 import fetch from "isomorphic-fetch";
 
-
-
 class Question extends Page {
   componentDidMount() {
     var urlParams = new URLSearchParams(window.location.search);
@@ -29,7 +27,6 @@ class Question extends Page {
         this.displayAnswerInput(data);
       })
       .catch(err => console.log("Error getting Question", err));
-
   }
 
   displayQuestion(data) {
@@ -105,23 +102,25 @@ class Question extends Page {
     console.log(allAnswers);
     window.singleQuestionFull.innerHTML += allAnswers;
 
-    answerApproves = document.querySelectorAll('.cardApprove')
-    answerApproves.forEach((a) => {
-      a.addEventListener('click', function(event) {
+    var answerApproves = document.querySelectorAll(".cardApprove");
+    answerApproves.forEach(a => {
+      a.addEventListener("click", function(event) {
         // this.card's author's paymail
         //render a moneybutton to them
-        const mb1 = document.getElementById('my-money-button')
-        moneyButton.render(mb1, {
-          to: answerAuthor,
-          amount: paymentAmount,
-          currency: "BSV"
-        })
+        var author = data.answers[0].userId;
+        console.log("userId of Author: " + (author || "nope"));
+        fetch(`/users/bsvAddress/${author}`)
+          .then(res => res.json())
+          .then(data => {
+            console.log(data);
+          })
+          .catch(err => console.log("Error getting Question", err));
       });
     });
-
   }
 
   displayAnswerInput = data => {
+    console.log(data[0]);
     $("#questionPostAnswerWrapper")
       .append(
         $("<textarea>")
