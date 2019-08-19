@@ -46,8 +46,8 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development PORT=3000 node index.js",
     "build": "next build",
-    "start": "node index.js",
-    "postinstall": "next build"
+    "start": "pm2 start \"node index.js\"",
+    "stop": "pm2 delete all"
   },
   "engines": {
     "node": "8.11.x"
