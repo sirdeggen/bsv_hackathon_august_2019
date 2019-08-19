@@ -1,6 +1,6 @@
-import Link from "next/link";
-import Router from "next/router";
-import React from "react";
+import Link from 'next/link'
+import Router from 'next/router'
+import React from 'react'
 import {
   Container,
   Row,
@@ -9,187 +9,196 @@ import {
   Jumbotron,
   ListGroup,
   ListGroupItem
-} from "reactstrap";
-import Page from "../components/page";
-import Layout from "../components/layout";
-import QuestionFull from "../components/questionFull";
-import fetch from "isomorphic-fetch";
+} from 'reactstrap'
+import Page from '../components/page'
+import Layout from '../components/layout'
+import QuestionFull from '../components/questionFull'
+import fetch from 'isomorphic-fetch'
 
 class Question extends Page {
-  componentDidMount() {
-    var urlParams = new URLSearchParams(window.location.search);
-    var questionId = urlParams.get("id");
+  componentDidMount () {
+    var urlParams = new URLSearchParams(window.location.search)
+    var questionId = urlParams.get('id')
     fetch(`/questions/question/${questionId}`)
       .then(res => res.json())
       .then(data => {
-        this.displayQuestion(data);
-        this.displayAnswerInput(data);
+        this.displayQuestion(data)
+        this.displayAnswerInput(data)
       })
-      .catch(err => console.log("Error getting Question", err));
+      .catch(err => console.log('Error getting Question', err))
   }
 
-  displayQuestion(data) {
-    console.log(data);
-    var allAnswers = "";
-    var paid = 0;
-    var authors = [];
-    data.answers = data.answers || [];
+  displayQuestion (data) {
+    console.log(data)
+    var allAnswers = ''
+    var paid = 0
+    var authors = []
+    data.answers = data.answers || []
 
     var badAnswers = data.answers.filter(
       a => a.response && !a.response.approval
-    );
+    )
     var paidAnswers = data.answers.filter(
       a => a.response && a.response.approval
-    );
-    var uncheckedAnswers = data.answers.filter(a => !a.response);
+    )
+    var uncheckedAnswers = data.answers.filter(a => !a.response)
 
-    function addAnswer(a, partAnswers) {
-      var ans = partAnswers[a];
-      var apprcolor = "";
-      var apprtitle = "";
-      var earned = "";
-      authors.push(ans.userId);
-      var cardActions = `<i class="fas fa-check-square cardApprove" author="${ans.userId}"></i><i class="fas fa-ban cardDisapprove"></i>`;
+    function addAnswer (a, partAnswers) {
+      var ans = partAnswers[a]
+      var apprcolor = ''
+      var apprtitle = ''
+      var earned = ''
+      authors.push(ans.userId)
+      var cardActions = `<i class="fas fa-check-square cardApprove" author="${ans.userId}"></i><i class="fas fa-ban cardDisapprove"></i>`
       // style depends on response types
       if (ans.response) {
         apprcolor = ans.response.approval
-          ? "border-success"
-          : "bg-secondary border-danger faded";
-        apprtitle = ans.response.approval ? "Approved" : "Invalid";
+          ? 'border-success'
+          : 'bg-secondary border-danger faded'
+        apprtitle = ans.response.approval ? 'Approved' : 'Invalid'
         earned = ans.response.approval
           ? `<span class="badge badge-success approvedBSV">Earned &#8383;SV</span>`
-          : "";
+          : ''
       } else {
-        apprcolor = "bg-light";
-        apprtitle = "Not Yet Approved";
+        apprcolor = 'bg-light'
+        apprtitle = 'Not Yet Approved'
       }
       // progress bar percentage calculation
-      var payamount = "";
+      var payamount = ''
       try {
-        payamount = ans.response.payment.amount;
-        paid += parseInt(payamount);
+        payamount = ans.response.payment.amount
+        paid += parseInt(payamount)
       } catch (er) {}
-      apprtitle += ans.ontime ? " - On Time" : " - Late";
+      apprtitle += ans.ontime ? ' - On Time' : ' - Late'
       allAnswers += `<div class='answer card mb-3 ${apprcolor}'>
-      <div class="card-header">${earned}${apprtitle}${cardActions}</div><div class="card-body">${ans.text}</div></div>`;
+      <div class="card-header">${earned}${apprtitle}${cardActions}</div><div class="card-body">${ans.text}</div></div>`
     }
 
     for (let a = 0; a < paidAnswers.length; a++) {
-      addAnswer(a, paidAnswers);
+      addAnswer(a, paidAnswers)
     }
     for (let a = 0; a < uncheckedAnswers.length; a++) {
-      addAnswer(a, uncheckedAnswers);
+      addAnswer(a, uncheckedAnswers)
     }
     for (let a = 0; a < badAnswers.length; a++) {
-      addAnswer(a, badAnswers);
+      addAnswer(a, badAnswers)
     }
 
     window.singleQuestionFull.innerHTML += `
       <h3>${data.title}</h3>
       <p class='lead'>${data.text}</p>
-    `;
-    var promised = 0;
+    `
+    var promised = 0
     for (let p = 0; p < data.proofs.length; p++) {
-      promised += parseInt(data.proofs[p].amount);
+      promised += parseInt(data.proofs[p].amount)
     }
-    var completion = String(Math.floor((paid / promised) * 100));
+    var completion = String(Math.floor((paid / promised) * 100))
     var completionBar = `
     <i class="fas fa-hand-holding-usd moneyBar"></i>
     <div class='progress'>
       <div class='progress-bar bg-success' role='progressbar' style='width: ${completion}%' aria-valuenow='${completion}' aria-valuemin='0' aria-valuemax='100'></div>
     </div>
-    <div id="questionPostAnswerWrapper"></div>`;
-    window.singleQuestionFull.innerHTML += completionBar;
-    window.singleQuestionFull.innerHTML += allAnswers;
+    <div id="questionPostAnswerWrapper"></div>`
+    window.singleQuestionFull.innerHTML += completionBar
+    window.singleQuestionFull.innerHTML += allAnswers
 
-    var idlist = authors.filter((v, i, a) => a.indexOf(v) === i).join(",");
+    var idlist = authors.filter((v, i, a) => a.indexOf(v) === i).join(',')
 
-    var authorsAddresses = [];
-    fetch("/account/many", { headers: { idlist: idlist } })
+    var authorsAddresses = []
+    fetch('/account/many', { headers: { idlist: idlist } })
       .then(res => res.json())
       .then(users => {
-        authorsAddresses.push(users);
+        authorsAddresses.push(users)
       })
       .catch(err => {
-        console.log(err);
-      });
+        console.log(err)
+      })
 
-    var answerApproves = document.querySelectorAll(".cardApprove");
+    var answerApproves = document.querySelectorAll('.cardApprove')
     answerApproves.forEach(a => {
-      a.addEventListener("click", function(event) {
-        //render a moneybutton to this.card's author's paymail
-        var authorId = String(a.attributes.author.value);
-        var authorDetails = authorsAddresses[0]
-          .filter( item =>
-            String(item._id) === authorId
-          );
-        var authorAddress = authorDetails[0].bsvAddress;
-        //moneybutton to that address
-        var amountToOffer = (promised - paid) / 100000000.0;
-        if(amountToOffer <= 0){amountToOffer = 0.010000000}
+      var targetMBid =
+        'target-' +
+        bsv.PrivateKey.fromRandom()
+          .toString()
+          .substr(0, 10)
+      console.log(targetMBid)
+      var targetHTML = `<div class='mbTarget' id='${targetMBid}'></div>`
+      a.parentElement.parentElement.innerHTML += targetHTML
+      a.addEventListener('click', function (event) {
+        // render a moneybutton to this.card's author's paymail
+        var authorId = String(a.attributes.author.value)
+        var authorDetails = authorsAddresses[0].filter(
+          item => String(item._id) === authorId
+        )
+        var authorAddress = authorDetails[0].bsvAddress
+        // moneybutton to that address
+        var amountToOffer = (promised - paid) / 100000000.0
+        if (amountToOffer <= 0) {
+          amountToOffer = 0.01
+        }
         console.log(amountToOffer)
-        //createPaymentButton(authorAddress, amountToOffer)
-        console.log("Pay " + authorAddress + " " + amountToOffer + " BSV");
-        moneyButton.render(document.querySelector('#target'), {
+        // createPaymentButton(authorAddress, amountToOffer)
+        console.log('Pay ' + authorAddress + ' ' + amountToOffer + ' BSV')
+        moneyButton.render(document.querySelector(`${targetMBid}`), {
           to: authorAddress,
           amount: amountToOffer,
-          currency: "BSV"
-        });
-      });
-    });
+          currency: 'BSV'
+        })
+      })
+    })
   }
 
-  displayAnswerInput = data => {
-    $("#questionPostAnswerWrapper")
+  displayAnswerInput (data) {
+    $('#questionPostAnswerWrapper')
       .append(
-        $("<textarea>")
-          .addClass("col-12")
-          .attr("id", "questionAnswerTextInput")
-          .attr("rows", 4)
+        $('<textarea>')
+          .addClass('col-12')
+          .attr('id', 'questionAnswerTextInput')
+          .attr('rows', 4)
           .attr(
-            "placeholder",
-            "Write your answer. " +
+            'placeholder',
+            'Write your answer. ' +
               (data.expiry > new Date().getTime()
-                ? "The reward period has not expired yet."
-                : "The reward expired, but you could still be helpful")
+                ? 'The reward period has not expired yet.'
+                : 'The reward expired, but you could still be helpful')
           )
       )
       .append(
-        $("<button>")
-          .append("Submit")
-          .addClass("btn btn-success col-4")
-          .on("click", () => this.submitAnswerToQuestion(data._id))
-      );
+        $('<button>')
+          .append('Submit')
+          .addClass('btn btn-success col-4')
+          .on('click', () => this.submitAnswerToQuestion(data._id))
+      )
   };
 
-  submitAnswerToQuestion = qid => {
-    var text = window.questionAnswerTextInput.value.toString();
-    if (text.length === 0) return alert("Cannot Submit an empty reply.");
+  submitAnswerToQuestion (qid) {
+    var text = window.questionAnswerTextInput.value.toString()
+    if (text.length === 0) return alert('Cannot Submit an empty reply.')
 
-    fetch("/questions/question/" + qid + "/answer", {
-      method: "POST",
+    fetch('/questions/question/' + qid + '/answer', {
+      method: 'POST',
       body: JSON.stringify({ text: text }),
-      credentials: "include",
+      credentials: 'include',
       headers: {
-        "Content-Type": "application/json",
-        "x-csrf-token": this.props.session.csrfToken
+        'Content-Type': 'application/json',
+        'x-csrf-token': this.props.session.csrfToken
       }
     })
       .then(res => res.text())
       .then(data => {
-        location.reload();
+        location.reload()
       })
-      .catch(err => this.showInputError(err));
+      .catch(err => this.showInputError(err))
   };
 
-  render() {
+  render () {
     return (
       <Layout {...this.props} navmenu={false} container={false}>
         <QuestionFull />
         <div id='target' />
       </Layout>
-    );
+    )
   }
 }
 
-export default Question;
+export default Question
