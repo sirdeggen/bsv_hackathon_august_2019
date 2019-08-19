@@ -149,10 +149,11 @@ class Question extends Page {
         console.log(divil)
         var dataSend = {
           "userId": ObjectId("5d598a318dd6ed998b373b77"),
-          "ontime": (( Date.now() <= questions.deadline ) || false ),
+          "ontime": ( Date.now() <= data.expirey ),
           "approval": true,
           "message": "Thanks! This was a very helpful answer."
         }
+        // future release you can customise this thank you message above
         moneyButton.render(divil, {
           to: authorAddress,
           amount: amountToOffer,
