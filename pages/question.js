@@ -166,7 +166,7 @@ class Question extends Page {
       })
     })
     function paidForAnswer (payment) {
-      document.querySelectorAll('.close').click()
+    //  document.querySelectorAll('.close').click()
       console.log(payment)
 
     }
