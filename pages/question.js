@@ -19,6 +19,15 @@ class Question extends Page {
   componentDidMount() {
     var urlParams = new URLSearchParams(window.location.search);
     var questionId = urlParams.get("id");
+
+    function createPaymentButton(div, address, amount) {
+      console.log("Moneybutton Activated");
+      moneyButton.render(div, {
+        to: "d@moneybutton.com",
+        amount: "0.01",
+        currency: "GBP"
+      });
+    }
     fetch(`/questions/question/${questionId}`)
       .then(res => res.json())
       .then(data => {
@@ -116,20 +125,25 @@ class Question extends Page {
 
     var answerApproves = document.querySelectorAll(".cardApprove");
     answerApproves.forEach(a => {
+      var targetMBid = "target_" + Math.random(a.attributes.author.value);
+      a.parentElement.parentElement.innerHTML += "<div class='mbTarget' id='" + targetMBid + "'></div>";
       a.addEventListener("click", function(event) {
-        //render a moneybutton to this.card's author's paymail
         var authorId = String(a.attributes.author.value);
-        var authorDetails = authorsAddresses[0]
-          .filter( item =>
-            String(item._id) === authorId
-          );
+        var authorDetails = authorsAddresses[0].filter(
+          item => String(item._id) === authorId
+        );
         var authorAddress = authorDetails[0].bsvAddress;
-        //moneybutton to that address
         var amountToOffer = promised - paid;
-        if(amountToOffer <= 0){amountToOffer = 1000000}
-        console.log(amountToOffer)
-        //createPaymentButton(authorAddress, amountToOffer)
+        if (amountToOffer <= 0) {
+          amountToOffer = 1000000;
+        }
+        console.log(amountToOffer);
         console.log("Pay " + authorAddress + amountToOffer + " satsoshis");
+        moneyButton.render(targetMBid, {
+          to: "d@moneybutton.com",
+          amount: "0.01",
+          currency: "GBP"
+        });
       });
     });
   }

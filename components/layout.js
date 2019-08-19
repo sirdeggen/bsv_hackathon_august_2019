@@ -79,6 +79,7 @@ export default class extends React.Component {
           <link href="../static/fontawesome/css/all.css" rel="stylesheet" />
           <script src="../static/js/jquery.js" />
           <script src="https://unpkg.com/bsv@0.26.4/bsv.min.js" />
+          <script src="https://www.moneybutton.com/moneybutton.js" />
         </Head>
         <MainBody
           navmenu={this.props.navmenu}
