@@ -33,6 +33,7 @@ class Question extends Page {
     console.log(data);
     var allAnswers = "";
     var paid = 0;
+    var authors = [];
     data.answers = data.answers || [];
 
     var badAnswers = data.answers.filter(
@@ -48,7 +49,8 @@ class Question extends Page {
       var apprcolor = "";
       var apprtitle = "";
       var earned = "";
-      var cardActions = `<i class="fas fa-check-square cardApprove"></i><i class="fas fa-ban cardDisapprove"></i>`;
+      authors.push(ans.userId);
+      var cardActions = `<i class="fas fa-check-square cardApprove" author="${ans.userId}"></i><i class="fas fa-ban cardDisapprove"></i>`;
       // style depends on response types
       if (ans.response) {
         apprcolor = ans.response.approval
@@ -99,28 +101,29 @@ class Question extends Page {
     </div>
     <div id="questionPostAnswerWrapper"></div>`;
     window.singleQuestionFull.innerHTML += completionBar;
-    console.log(allAnswers);
     window.singleQuestionFull.innerHTML += allAnswers;
+
+    var idlist = authors
+      .filter((v, i, a) => a.indexOf(v) === i)
+      .join(',')
+
+    console.log(idlist);
+    fetch("/account/many", { headers: { idlist: { idlist } } })
+      .then(res => res.json())
+      .then(res => (console.log(res)))
+      .catch(err => console.log(err));
 
     var answerApproves = document.querySelectorAll(".cardApprove");
     answerApproves.forEach(a => {
       a.addEventListener("click", function(event) {
-        // this.card's author's paymail
-        //render a moneybutton to them
-        var author = data.answers[0].userId;
+        //render a moneybutton to this.card's author's paymail
+        var author = a.attributes.author.value;
         console.log("userId of Author: " + (author || "nope"));
-        fetch(`/users/bsvAddress/${author}`)
-          .then(res => res.json())
-          .then(data => {
-            console.log(data);
-          })
-          .catch(err => console.log("Error getting Question", err));
       });
     });
   }
 
   displayAnswerInput = data => {
-    console.log(data[0]);
     $("#questionPostAnswerWrapper")
       .append(
         $("<textarea>")
