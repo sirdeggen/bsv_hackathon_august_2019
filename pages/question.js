@@ -117,7 +117,7 @@ class Question extends Page {
     var answerApproves = document.querySelectorAll('.cardApprove')
     answerApproves.forEach(a => {
       var targetMBid =
-        'target-' +
+        'target' +
         bsv.PrivateKey.fromRandom()
           .toString()
           .substr(0, 10)
@@ -136,14 +136,14 @@ class Question extends Page {
         if (amountToOffer <= 0) {
           amountToOffer = 0.01
         }
-        console.log(amountToOffer)
-        // createPaymentButton(authorAddress, amountToOffer)
         console.log('Pay ' + authorAddress + ' ' + amountToOffer + ' BSV')
-        console.log(res.authorId)
-        moneyButton.render(document.querySelector(`${targetMBid}`), {
+        const divil = document.getElementById(`${targetMBid}`)
+        console.log(divil)
+        moneyButton.render(divil, {
           to: authorAddress,
           amount: amountToOffer,
-          currency: 'BSV'
+          currency: 'BSV',
+          type: 'buy'
         })
       })
     })
@@ -196,7 +196,14 @@ class Question extends Page {
     return (
       <Layout {...this.props} navmenu={false} container={false}>
         <QuestionFull />
-        <div id='target' />
+        <div className="alert alert-dismissible alert-secondary moneybuttonContainer">
+          <button type="button" className="close" data-dismiss="alert">&times;
+          </button>
+          <strong>Great!</strong> We're so pleased you've found one of the answers you were looking for. Please swipe the moneybutton to send your promised reward to this responder.
+          <br />
+          <p>Payment to: <span class='authorMoneyButton'></span></p>
+          <div id='target' />
+        </div>
       </Layout>
     )
   }

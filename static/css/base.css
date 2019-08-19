@@ -122,3 +122,19 @@ a:hover {
   float: left;
   margin-bottom: 20px;
 }
+
+.moneybuttonContainer{
+  align-content: center;
+  position: fixed;
+  top: 35%;
+  z-index: 10;
+  box-shadow: 5px 5px 100px rgba(0,0,0,0.2);
+  width: fit-content;
+  margin: 6em;
+}
+
+.mbTarget{
+  width: fit-content;
+  float: right;
+  max-width: 50%;
+}
