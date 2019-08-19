@@ -118,14 +118,12 @@ class Question extends Page {
     answerApproves.forEach(a => {
       a.addEventListener("click", function(event) {
         //render a moneybutton to this.card's author's paymail
-        var authorId = String(this.attributes.author.value);
-        console.log(authorsAddresses);
-        console.log(authorId);
-        var authorObj = authorsAddresses
-          .map(q => authorId)
-          .filter((v, i, a) => a.indexOf(v) === i);
-        console.log(authorObj);
-        var authorAddress = String((authorObj[0] || []).address);
+        var authorId = String(a.attributes.author.value);
+        var authorDetails = authorsAddresses[0]
+          .filter( item =>
+            String(item._id) === authorId
+          );
+        var authorAddress = authorDetails[0].bsvAddress;
         console.log("paymail of Author: " + (authorAddress || "nope"));
       });
     });
