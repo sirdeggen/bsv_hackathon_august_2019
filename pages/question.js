@@ -124,7 +124,7 @@ class Question extends Page {
     answerApproves.forEach(a => {
       a.addEventListener("click", function(event) {
         //render a moneybutton to this.card's author's paymail
-        var author = a.attributes.author.value;
+        var authorAddress = a.attributes.author.value;
         console.log("userId of Author: " + (author || "nope"));
       });
     });
