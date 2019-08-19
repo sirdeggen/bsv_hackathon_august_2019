@@ -121,9 +121,9 @@ class Question extends Page {
         bsv.PrivateKey.fromRandom()
           .toString()
           .substr(0, 10)
-      console.log(targetMBid)
       var targetHTML = `<div class='mbTarget' id='${targetMBid}'></div>`
-      a.parentElement.parentElement.innerHTML += targetHTML
+      console.log(targetMBid)
+      document.getElementById('target').innerHTML += targetHTML
       a.addEventListener('click', function (event) {
         // render a moneybutton to this.card's author's paymail
         var authorId = String(a.attributes.author.value)
@@ -139,6 +139,7 @@ class Question extends Page {
         console.log(amountToOffer)
         // createPaymentButton(authorAddress, amountToOffer)
         console.log('Pay ' + authorAddress + ' ' + amountToOffer + ' BSV')
+        console.log(res.authorId)
         moneyButton.render(document.querySelector(`${targetMBid}`), {
           to: authorAddress,
           amount: amountToOffer,
