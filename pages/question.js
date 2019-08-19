@@ -125,11 +125,16 @@ class Question extends Page {
           );
         var authorAddress = authorDetails[0].bsvAddress;
         //moneybutton to that address
-        var amountToOffer = promised - paid;
-        if(amountToOffer <= 0){amountToOffer = 1000000}
+        var amountToOffer = (promised - paid) / 100000000.0;
+        if(amountToOffer <= 0){amountToOffer = 0.010000000}
         console.log(amountToOffer)
         //createPaymentButton(authorAddress, amountToOffer)
-        console.log("Pay " + authorAddress + amountToOffer + " satsoshis");
+        console.log("Pay " + authorAddress + " " + amountToOffer + " BSV");
+        moneyButton.render(document.querySelector('#target'), {
+          to: authorAddress,
+          amount: amountToOffer,
+          currency: "BSV"
+        });
       });
     });
   }
@@ -181,6 +186,7 @@ class Question extends Page {
     return (
       <Layout {...this.props} navmenu={false} container={false}>
         <QuestionFull />
+        <div id='target' />
       </Layout>
     );
   }
