@@ -111,10 +111,10 @@ class Question extends Page {
 
     console.log(idlist)
 
-    fetch("/account/many", { headers: { idlist: { idlist } } })
+    fetch("/account/many", { headers: { idlist: idlist } })
       .then(res => res.json())
-      .then(users => (console.log(users)))
-      .catch(err => console.log(err));
+      .then(users => {console.log(users)})
+      .catch(err => {console.log(err)});
 
     var answerApproves = document.querySelectorAll(".cardApprove");
     answerApproves.forEach(a => {
