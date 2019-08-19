@@ -147,7 +147,12 @@ class Question extends Page {
         console.log('Pay ' + authorAddress + ' ' + amountToOffer + ' BSV')
         const divil = document.getElementById(`${targetMBid}`)
         console.log(divil)
-        var dataSend = { "this": "placeholder" }
+        var dataSend = {
+          "userId": ObjectId("5d598a318dd6ed998b373b77"),
+          "ontime": (( Date.now() <= questions.deadline ) || false ),
+          "approval": true,
+          "message": "Thanks! This was a very helpful answer."
+        }
         moneyButton.render(divil, {
           to: authorAddress,
           amount: amountToOffer,
@@ -179,15 +184,15 @@ class Question extends Page {
         $('<button>')
           .append('Submit')
           .addClass('btn btn-success col-4')
-          .on('click', () => this.submitAnswerToQuestion(data._id))
+          .on('click', () => this.submitAnswerToQuestion(data))
       )
   };
 
-  submitAnswerToQuestion (qid) {
+  submitAnswerToQuestion (data) {
     var text = window.questionAnswerTextInput.value.toString()
     if (text.length === 0) return alert('Cannot Submit an empty reply.')
 
-    fetch('/questions/question/' + qid + '/answer', {
+    fetch('/questions/question/' + data._id + '/answer', {
       method: 'POST',
       body: JSON.stringify({ text: text }),
       credentials: 'include',
