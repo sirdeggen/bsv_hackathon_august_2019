@@ -3,6 +3,24 @@
  **/
 "use strict";
 
+const MongoClient = require("mongodb").MongoClient;
+const ObjectId = require("mongodb").ObjectId;
+
+let usersCollection;
+
+if (process.env.MONGO_URI) {
+  // Connect to MongoDB Database and return user connection
+  MongoClient.connect(process.env.MONGO_URI, (err, mongoClient) => {
+    if (err) throw new Error(err);
+    const dbName = process.env.MONGO_URI.split("/")
+      .pop()
+      .split("?")
+      .shift();
+    const db = mongoClient.db(dbName);
+    usersCollection = db.collection("users");
+  });
+}
+
 module.exports = (expressApp, functions) => {
   if (expressApp === null) {
     throw new Error("expressApp option must be an express server instance");
@@ -31,6 +49,29 @@ module.exports = (expressApp, functions) => {
         .status(403)
         .json({ error: "Must be signed in to get profile" });
     }
+  });
+
+  // Expose a route to return user profile if logged in with a session
+  expressApp.get("/account/many", (req, res) => {
+    var idlist = (req.headers.idlist || "")
+      .toString()
+      .split("-")
+      .map(i => ObjectId(i));
+
+    usersCollection
+      .find({ _id: { $in: idlist } })
+      .limit(idlist.length)
+      .toArray((err, users) => {
+        if (err) {
+          return res.status(500).json(err);
+        } else {
+          res.status(200).json(
+            users.map(u => {
+              return { _id: u._id, name: u.name };
+            })
+          );
+        }
+      });
   });
 
   // Expose a route to allow users to update their profiles (name, email)
@@ -113,7 +154,7 @@ module.exports = (expressApp, functions) => {
   // assuming an address comes from client side then do this:
   expressApp.post("/account/address", (req, res) => {
     if (req.user) {
-      req.user.id
+      req.user.id;
     } else {
       return res
         .status(403)

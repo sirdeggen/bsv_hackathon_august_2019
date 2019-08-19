@@ -25,66 +25,91 @@ class Questions extends Page {
   componentDidMount() {
     fetch("/questions/all", { headers: { q: null, l: 25 } })
       .then(res => res.json())
-      .then(data => this.displayQuestions(data))
+      .then(data => {
+        var idlist = data
+          .map(q => q.userId)
+          .filter((v, i, a) => a.indexOf(v) === i)
+          .join("-");
+
+        fetch("/account/many", { headers: { idlist: idlist } })
+          .then(res => res.json())
+          .then(users => this.displayQuestions(data, users))
+          .catch(err => console.log(err));
+      })
       .catch(err => console.log("Error getting Questions", err));
   }
 
-  displayQuestions(data) {
-    console.log("Questions", data);
+  displayQuestions(data, users) {
     var table = window.questionsList;
 
-    $("<table>")
+    data = data.map(q => {
+      var u = users.filter(u => u._id === q.userId);
+      if (u && u.length === 1) {
+        q.user = u[0];
+      } else {
+        q.user = { name: "Deleted User", _id: null };
+      }
+      return q;
+    });
+
+    $("<div>")
       .addClass("table")
       .append(
-        `<thead>
-          <tr class='table-primary'>
-            <th scope="col">Questions</th>
-            <th scope="col">Answers</th>
-            <th scope="col" style="text-align: right;">Value</th>
-          </tr>
-        </thead>`
+        $("<div>").addClass("row bg-primary text-white").css("padding", "10px")
+    
+        .append($("<div>").addClass("col-md-6 col-sm-12").append("Questions"))
+        .append($("<div>").addClass("col-md-2 col-sm-4").append("Answers"))
+        .append($("<div>").addClass("col-md-2 col-sm-4").append("Author"))
+        .append($("<div>").addClass("col-md-2 col-sm-4").append("Value"))
+
       )
-      .append(
-        $("<tbody id='tbody'>")
-      )
+      .append($("<div id='tbody'>"))
       .appendTo(table);
     var tbody = window.tbody;
-      for (let i = 0; i < data.length; i++) {
-        const q = data[i];
-        $("<tr>")
-          .attr("onClick", "window.location.href='/question?id=" + q._id + "'")
-          .addClass("table-light table-hover")
-          .css("cursor", "pointer")
-          .append(
-            $("<td>")
-              .append(q.title)
-              .append(
-                $("<span>")
-                  .append(q.text)
-                  .addClass('text-muted')
-                  .css("overflow", "hidden")
-                  .css("padding-left", "10px")
-                  .css("text-overflow", "elipsis")
-                  .css("overflow", "hidden")
-                  .css("white-space", "nowrap")
-              )
+    for (let i = 0; i < data.length; i++) {
+      const q = data[i];
+      $("<a>")
+        .attr("href", "/question?id=" + q._id)
+        .addClass("row border table-light table-hover")
+        .css("cursor", "pointer")
+        .append(
+          $("<div>").addClass("col-md-6 col-sm-12")
+          .css("background-color", "#00000006")
+          .css("overflow-x", "hidden")
+            .append(q.title)
+            .append(
+              $("<span>")
+                .append(q.text)
+                .addClass("text-muted")
+                .css("overflow", "hidden")
+                .css("padding-left", "10px")
+                .css("text-overflow", "elipsis")
+                .css("overflow", "hidden")
+                .css("white-space", "nowrap")
             )
-          .append(
-            $("<td>")
-              .append((q.answers||[]).length + " answers")
+        )
+        .append($("<div>").addClass("col-md-2 col-sm-4").append((q.answers || []).length + " answers"))
+        .append(
+          $("<div>").addClass("col-md-2 col-sm-4").append(
+            $("<a>")
+              .attr("href", "/profile?id=" + q.userId)
+              .addClass(!q.user._id ? "faded" : "btn btn-outline-primary")
+              .append(q.user.name.substr(0, 100))
           )
-          .append(
-            $("<td>")
-              .css('text-align', 'right')
-              .append(
-                q.proofs
-                  .filter(p => p.type == "promise")
-                  .map(p => parseInt(p.amount))
-                  .reduce((a, b) => a + b, 0) + " satoshis"
-              )
+        )
+        .append(
+          $("<div>").addClass("col-md-2 col-sm-4")
+            .css("text-align", "right")
+            .append(
+              q.proofs
+                .filter(p => p.type == "promise")
+                .map(p => parseInt(p.amount))
+                .reduce((a, b) => a + b, 0) + " satoshis"
             )
-          .appendTo(tbody);
-      }
+        )
+
+        .appendTo(tbody);
+    }
   }
 }
 
