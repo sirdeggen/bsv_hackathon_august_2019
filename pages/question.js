@@ -26,7 +26,14 @@ class Question extends Page {
         this.displayAnswerInput(data)
       })
       .catch(err => console.log('Error getting Question', err))
-  }
+
+      var closebox = document.querySelectorAll('.close')
+      closebox.forEach( (x) => {
+        x.addEventListener('click', function (event) {
+          x.parentElement.style.display = "none"
+        })
+      })
+    }
 
   displayQuestion (data) {
     console.log(data)
@@ -197,7 +204,7 @@ class Question extends Page {
       <Layout {...this.props} navmenu={false} container={false}>
         <QuestionFull />
         <div className="alert alert-dismissible alert-secondary moneybuttonContainer">
-          <button type="button" className="close" data-dismiss="alert">&times;
+          <button type="button" className="close" data-dismiss="alert" >&times;
           </button>
           <strong>Great!</strong> We're so pleased you've found one of the answers you were looking for. Please swipe the moneybutton to send your promised reward to this responder.
           <br />
