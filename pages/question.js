@@ -19,7 +19,6 @@ class Question extends Page {
   componentDidMount() {
     var urlParams = new URLSearchParams(window.location.search);
     var questionId = urlParams.get("id");
-    console.log(questionId);
     fetch(`/questions/question/${questionId}`)
       .then(res => res.json())
       .then(data => {
@@ -65,13 +64,11 @@ class Question extends Page {
         apprtitle = "Not Yet Approved";
       }
       // progress bar percentage calculation
-      var payamount = ""
+      var payamount = "";
       try {
-        payamount = ans.response.payment.amount
+        payamount = ans.response.payment.amount;
         paid += parseInt(payamount);
-      } catch (er) {
-        ;
-      }
+      } catch (er) {}
       apprtitle += ans.ontime ? " - On Time" : " - Late";
       allAnswers += `<div class='answer card mb-3 ${apprcolor}'>
       <div class="card-header">${earned}${apprtitle}${cardActions}</div><div class="card-body">${ans.text}</div></div>`;
@@ -105,28 +102,31 @@ class Question extends Page {
     window.singleQuestionFull.innerHTML += completionBar;
     window.singleQuestionFull.innerHTML += allAnswers;
 
-    var idlist = authors
-      .filter((v, i, a) => a.indexOf(v) === i)
-      .join(',')
+    var idlist = authors.filter((v, i, a) => a.indexOf(v) === i).join(",");
 
-    var authorsAddresses = []
-    authorsAddresses = fetch("/account/many", { headers: { idlist: idlist } })
+    var authorsAddresses = [];
+    fetch("/account/many", { headers: { idlist: idlist } })
       .then(res => res.json())
       .then(users => {
-        console.log(users)
-        return users;
+        authorsAddresses.push(users);
       })
-      .catch(err => {console.log(err)});
+      .catch(err => {
+        console.log(err);
+      });
 
     var answerApproves = document.querySelectorAll(".cardApprove");
     answerApproves.forEach(a => {
       a.addEventListener("click", function(event) {
         //render a moneybutton to this.card's author's paymail
-        var authorId = a.attributes.author.value;
-        authorsAddresses
+        var authorId = String(this.attributes.author.value);
+        console.log(authorsAddresses);
+        console.log(authorId);
+        var authorObj = authorsAddresses
           .map(q => authorId)
-          .filter((v, i, a) => a.indexOf(v) === i)
-        console.log("userId of Author: " + (author || "nope"));
+          .filter((v, i, a) => a.indexOf(v) === i);
+        console.log(authorObj);
+        var authorAddress = String((authorObj[0] || []).address);
+        console.log("paymail of Author: " + (authorAddress || "nope"));
       });
     });
   }
