@@ -125,7 +125,7 @@ class Question extends Page {
 
     var answerApproves = document.querySelectorAll(".cardApprove");
     answerApproves.forEach(a => {
-      var targetMBid = "target_" + Math.random(a.attributes.author.value);
+      var targetMBid = "target-" + bsv.PrivateKey.fromRandom().toString().substr(0,10);
       a.parentElement.parentElement.innerHTML += "<div class='mbTarget' id='" + targetMBid + "'></div>";
       a.addEventListener("click", function(event) {
         var authorId = String(a.attributes.author.value);
