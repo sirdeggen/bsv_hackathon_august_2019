@@ -147,14 +147,14 @@ class Question extends Page {
         console.log('Pay ' + authorAddress + ' ' + amountToOffer + ' BSV')
         const divil = document.getElementById(`${targetMBid}`)
         console.log(divil)
-        var dataSend = JSON.stringify({ "this": "" })
+        var dataSend = { "this": "placeholder" }
         moneyButton.render(divil, {
           to: authorAddress,
           amount: amountToOffer,
           editable: false,
           currency: 'BSV',
           type: 'buy',
-          buttonData: {dataSend}
+          buttonData: JSON.stringify(dataSend)
         })
       })
     })
