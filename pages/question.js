@@ -48,6 +48,7 @@ class Question extends Page {
       var apprcolor = "";
       var apprtitle = "";
       var earned = "";
+      var cardActions = `<i class="fas fa-check-square cardApprove"></i><i class="fas fa-ban cardDisapprove"></i>`;
       // style depends on response types
       if (ans.response) {
         apprcolor = ans.response.approval
@@ -69,9 +70,7 @@ class Question extends Page {
       }
       apprtitle += ans.ontime ? " - On Time" : " - Late";
       allAnswers += `<div class='answer card mb-3 ${apprcolor}'>
-      <div class="card-header">${earned}${apprtitle}</div><div class="card-body">${
-        ans.text
-      }</div></div>`;
+      <div class="card-header">${earned}${apprtitle}${cardActions}</div><div class="card-body">${ans.text}</div></div>`;
     }
 
     for (let a = 0; a < paidAnswers.length; a++) {
@@ -94,18 +93,34 @@ class Question extends Page {
     }
     var completion = String(Math.floor((paid / promised) * 100));
     var completionBar = `
-    <h6>Payout: </h6>
+    <i class="fas fa-hand-holding-usd moneyBar"></i>
     <div class='progress'>
       <div class='progress-bar bg-success' role='progressbar' style='width: ${completion}%' aria-valuenow='${completion}' aria-valuemin='0' aria-valuemax='100'></div>
     </div>
-    <hr>
     <div id="questionPostAnswerWrapper"></div>`;
     window.singleQuestionFull.innerHTML += completionBar;
     console.log(allAnswers);
     window.singleQuestionFull.innerHTML += allAnswers;
+
+    var answerApproves = document.querySelectorAll(".cardApprove");
+    answerApproves.forEach(a => {
+      a.addEventListener("click", function(event) {
+        // this.card's author's paymail
+        //render a moneybutton to them
+        var author = data.answers[0].userId;
+        console.log("userId of Author: " + (author || "nope"));
+        fetch(`/users/bsvAddress/${author}`)
+          .then(res => res.json())
+          .then(data => {
+            console.log(data);
+          })
+          .catch(err => console.log("Error getting Question", err));
+      });
+    });
   }
 
   displayAnswerInput = data => {
+    console.log(data[0]);
     $("#questionPostAnswerWrapper")
       .append(
         $("<textarea>")

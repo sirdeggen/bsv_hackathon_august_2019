@@ -76,6 +76,7 @@ export default class extends React.Component {
           <script src="https://cdn.polyfill.io/v2/polyfill.min.js" />
           <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
           <link href="../static/css/base.css" rel="stylesheet" />
+          <link href="../static/fontawesome/css/all.css" rel="stylesheet" />
           <script src="../static/js/jquery.js" />
           <script src="https://unpkg.com/bsv@0.26.4/bsv.min.js" />
         </Head>
