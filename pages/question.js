@@ -43,16 +43,12 @@ class Question extends Page {
     );
     var uncheckedAnswers = data.answers.filter(a => !a.response);
 
-    const StyledIcon = styled(FontAwesomeIcon)`
-      color: green;
-      font-size: 50px;
-    `;
-
     function addAnswer(a, partAnswers) {
       var ans = partAnswers[a];
       var apprcolor = "";
       var apprtitle = "";
       var earned = "";
+      var cardActions = `<i class="fas fa-check-square"></i>`;
       // style depends on response types
       if (ans.response) {
         apprcolor = ans.response.approval
@@ -74,7 +70,7 @@ class Question extends Page {
       }
       apprtitle += ans.ontime ? " - On Time" : " - Late";
       allAnswers += `<div class='answer card mb-3 ${apprcolor}'>
-      <div class="card-header">${earned}${apprtitle}</div><div class="card-body">${
+      <div class="card-header">${earned}${apprtitle}${cardActions}</div><div class="card-body">${
         ans.text
       }</div></div>`;
     }
